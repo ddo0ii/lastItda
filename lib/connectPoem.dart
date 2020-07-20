@@ -60,6 +60,10 @@ class _ConnectPoemState extends State<ConnectPoem> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -102,11 +106,11 @@ class _ConnectPoemState extends State<ConnectPoem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            SizedBox(height: 50.0,),
+            SizedBox(height: screenHeight*0.08,),
             Container(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              width: 200,
-              height: 40,
+              width: screenWidth*0.6,
+              height: screenHeight*0.06,
               decoration: BoxDecoration(
                 color: Color(0xff53975c),
                 borderRadius: BorderRadius.only(
@@ -118,14 +122,12 @@ class _ConnectPoemState extends State<ConnectPoem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 20,
-                    height: 20,
+                    width: screenWidth*0.065,
+                    height: screenHeight*0.065,
                     child: Image.asset('assets/ink.png'),
                     //color: Colors.white,
                   ),
-                  Container(
-                    width: 20.0,
-                  ),
+                  Container(width: screenWidth*0.05),
                   Container(
                     child: Text(
                       '시로 마음을 잇다',
@@ -134,7 +136,7 @@ class _ConnectPoemState extends State<ConnectPoem> {
                         fontWeight: FontWeight.w700,
                         fontFamily: "Arita-dotum-_OTF",
                         fontStyle: FontStyle.normal,
-                        fontSize: 15,
+                        fontSize: screenWidth*0.04,
                       ),
                     ),
                   ),
@@ -142,7 +144,7 @@ class _ConnectPoemState extends State<ConnectPoem> {
               ),
             ),
             _slist(),
-            SizedBox(height: 10.0,),
+            SizedBox(height: screenHeight*0.01,),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -171,22 +173,26 @@ class _ConnectPoemState extends State<ConnectPoem> {
     );
   }
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenHeight*0.08,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenHeight*0.01,
           ),
           Container(
             child: Text(
@@ -196,7 +202,7 @@ class _ConnectPoemState extends State<ConnectPoem> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.03,
               ),
             ),
           ),
@@ -205,6 +211,10 @@ class _ConnectPoemState extends State<ConnectPoem> {
     );
   }
   Widget _slist () {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('poemList').snapshots(),
@@ -227,15 +237,15 @@ class _ConnectPoemState extends State<ConnectPoem> {
                       children: <Widget>[
                         Text(item['nickname'],
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: screenWidth*0.055,
                             fontWeight: FontWeight.bold,
                             //color: Colors.black,
                           ),
                         ),
-                        Container(width: 10.0,),
+                        Container(width: screenWidth*0.02,),
                         Text(item['school'],
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ],

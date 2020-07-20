@@ -147,11 +147,11 @@ class _WritePoemState extends State<WritePoem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 50.0,),
+                SizedBox(height: screenHeight*0.08,),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  width: 200,
-                  height: 40,
+                  width: screenWidth*0.6,
+                  height: screenHeight*0.06,
                   decoration: BoxDecoration(
                     boxShadow: [BoxShadow(
                       color: Color(0xffb5c8bc),
@@ -167,14 +167,12 @@ class _WritePoemState extends State<WritePoem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        width: 20,
-                        height: 20,
+                        width: screenWidth*0.065,
+                        height: screenHeight*0.065,
                         child: Image.asset('assets/ink.png'),
                         //color: Colors.white,
                       ),
-                      Container(
-                        width:20.0,
-                      ),
+                      Container(width: screenWidth*0.05),
                       Container(
                         child: Text(
                           '시로 마음을 잇다',
@@ -183,7 +181,7 @@ class _WritePoemState extends State<WritePoem> {
                             fontWeight: FontWeight.w700,
                             fontFamily: "Arita-dotum-_OTF",
                             fontStyle: FontStyle.normal,
-                            fontSize: 15,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ),
@@ -191,7 +189,7 @@ class _WritePoemState extends State<WritePoem> {
                   ),
                 ),
                 Container(
-                  height: 300,
+                  height: screenHeight*0.12,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
                   ),
@@ -204,10 +202,10 @@ class _WritePoemState extends State<WritePoem> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new FlatButton(
-                                onPressed: () {
+                            SizedBox(width: screenWidth*0.04),
+                            Container(
+                              child: InkWell(
+                                onTap: () {
                                   switch (_currentStatus) {
                                     case RecordingStatus.Initialized:
                                       {
@@ -233,25 +231,80 @@ class _WritePoemState extends State<WritePoem> {
                                       break;
                                   }
                                 },
-                                child: _buildText(_currentStatus),
-                                color: Colors.lightBlue,
+                                child: Container(
+                                  child: _buildText(_currentStatus),
+                                ),
                               ),
                             ),
-                            new FlatButton(
-                              onPressed:
-                              _currentStatus != RecordingStatus.Unset ? _stop : null,
-                              child:
-                              new Text("Stop", style: TextStyle(color: Colors.white)),
-                              color: Colors.blueAccent.withOpacity(0.5),
+                            SizedBox(width: screenWidth*0.04),
+                            Container(
+                              child: InkWell(
+                                onTap: _currentStatus != RecordingStatus.Unset ? _stop : null,
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: screenWidth*0.08,
+                                        height: screenHeight*0.04,
+                                        child: Image.asset('assets/stop.png'),
+                                        //color: Colors.white,
+                                      ),
+                                      Container(
+                                        height: screenHeight*0.01,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          '녹음 끝내기',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "Arita-dotum-_OTF",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: screenWidth*0.035,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            new FlatButton(
-                              onPressed: onPlayAudio,
-                              child:
-                              new Text("Play", style: TextStyle(color: Colors.white)),
-                              color: Colors.blueAccent.withOpacity(0.5),
+                            SizedBox(width: screenWidth*0.04),
+                            Container(
+                              child: InkWell(
+                                onTap: onPlayAudio,
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: screenWidth*0.08,
+                                        height: screenHeight*0.04,
+                                        child: Image.asset('assets/listen.png'),
+                                        //color: Colors.white,
+                                      ),
+                                      Container(
+                                        height: screenHeight*0.01,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          '녹음 듣기',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "Arita-dotum-_OTF",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: screenWidth*0.035,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -262,7 +315,7 @@ class _WritePoemState extends State<WritePoem> {
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  height: 400.0,
+                  height: screenHeight*0.6,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -278,16 +331,16 @@ class _WritePoemState extends State<WritePoem> {
                           children: <Widget>[
                             Text('제목',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: screenWidth*0.04,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 10.0,),
+                            SizedBox(height: screenHeight*0.02,),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 50.0,
+                              width: screenWidth*0.85,
+                              height: screenHeight*0.08,
                               decoration: BoxDecoration(
                                   color: const Color(0x69e9f4eb)
                               ),
@@ -307,19 +360,19 @@ class _WritePoemState extends State<WritePoem> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10.0,),
+                            SizedBox(height: screenHeight*0.02,),
                             Text('나의 느낀점(다짐)',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: screenWidth*0.04,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 10.0,),
+                            SizedBox(height: screenHeight*0.02,),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 250.0,
+                              width: screenWidth*0.85,
+                              height: screenHeight*0.35,
                               decoration: BoxDecoration(
                                   color: const Color(0x69e9f4eb)
                               ),
@@ -345,7 +398,7 @@ class _WritePoemState extends State<WritePoem> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: screenHeight*0.01,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -381,7 +434,7 @@ class _WritePoemState extends State<WritePoem> {
                     ],
                   ),
                 ),
-                Container(height: 10.0,),
+                SizedBox(height: screenHeight*0.02,),
               ],
             ),
           ),
@@ -390,22 +443,26 @@ class _WritePoemState extends State<WritePoem> {
     );
   }
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenHeight*0.08,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenHeight*0.01,
           ),
           Container(
             child: Text(
@@ -415,7 +472,7 @@ class _WritePoemState extends State<WritePoem> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.03,
               ),
             ),
           ),
@@ -514,32 +571,67 @@ class _WritePoemState extends State<WritePoem> {
   }
 
   Widget _buildText(RecordingStatus status) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     var text = "";
+    var imgText = "";
     switch (_currentStatus) {
       case RecordingStatus.Initialized:
         {
-          text = 'Start';
+          text = '녹음 시작';
+          imgText = 'assets/record.png';
           break;
         }
       case RecordingStatus.Recording:
         {
-          text = 'Pause';
+          text = '일시정지';
+          imgText = 'assets/pause.png';
           break;
         }
       case RecordingStatus.Paused:
         {
-          text = 'Resume';
+          text = '이어서 녹음';
+          imgText = 'assets/record.png';
           break;
         }
       case RecordingStatus.Stopped:
         {
-          text = 'Init';
+          text = '다시 녹음';
+          imgText = 'assets/rerecord.png';
           break;
         }
       default:
         break;
     }
-    return Text(text, style: TextStyle(color: Colors.white));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          width: screenWidth*0.08,
+          height: screenHeight*0.04,
+          child: Image.asset(imgText),
+          //color: Colors.white,
+        ),
+        Container(
+          height: screenHeight*0.01,
+        ),
+        Container(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontFamily: "Arita-dotum-_OTF",
+              fontStyle: FontStyle.normal,
+              fontSize: screenWidth*0.035,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   void onPlayAudio() async {

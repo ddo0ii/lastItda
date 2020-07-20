@@ -114,7 +114,6 @@ class _ReadPoemState extends State<ReadPoem> {
     _initSettings();
   }
 
-
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -166,11 +165,10 @@ class _ReadPoemState extends State<ReadPoem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 50.0,),
+                SizedBox(height: screenHeight*0.08,),
                 Container(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  width: 200,
-                  height: 40,
+                  width: screenWidth*0.6,
+                  height: screenHeight*0.06,
                   decoration: BoxDecoration(
                     boxShadow: [BoxShadow(
                       color: Color(0xffb5c8bc),
@@ -186,14 +184,12 @@ class _ReadPoemState extends State<ReadPoem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        width: 20,
-                        height: 20,
+                        width: screenWidth*0.065,
+                        height: screenHeight*0.065,
                         child: Image.asset('assets/ink.png'),
                         //color: Colors.white,
                       ),
-                      Container(
-                        width:20.0,
-                      ),
+                      Container(width: screenWidth*0.05),
                       Container(
                         child: Text(
                           '시로 마음을 잇다',
@@ -202,7 +198,7 @@ class _ReadPoemState extends State<ReadPoem> {
                             fontWeight: FontWeight.w700,
                             fontFamily: "Arita-dotum-_OTF",
                             fontStyle: FontStyle.normal,
-                            fontSize: 15,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ),
@@ -210,26 +206,66 @@ class _ReadPoemState extends State<ReadPoem> {
                   ),
                 ),
                 Container(
-                  height: 70,
+                  height: screenHeight*0.12,
+                  width: screenWidth*1.0,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
                   ),
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      new FlatButton(
-                        onPressed: onPlayAudio,
-                        child:
-                        new Text("Play", style: TextStyle(color: Colors.white)),
-                        color: Colors.blueAccent.withOpacity(0.5),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(width: screenWidth*0.04),
+                            Container(
+                              child: InkWell(
+                                onTap: onPlayAudio,
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: screenWidth*0.08,
+                                        height: screenHeight*0.04,
+                                        child: Image.asset('assets/listen.png'),
+                                        //color: Colors.white,
+                                      ),
+                                      Container(
+                                        height: screenHeight*0.01,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          '녹음 듣기',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "Arita-dotum-_OTF",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: screenWidth*0.035,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        //width: 200.0,
                       ),
                     ],
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  height: 430.0,
+                  width: screenWidth*1.0,
+                  height: screenHeight*0.9,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -237,72 +273,65 @@ class _ReadPoemState extends State<ReadPoem> {
                       ),
                       color: const Color(0xffffffff)
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('제목',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(ssubject),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Text('나의 느낀점(다짐)',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(scontent),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Text('녹음파일',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 45.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(srecord),
-                            ),
-                          ],
+                      SizedBox(height: screenHeight*0.01,),
+                      Text(school + '  ' + grade + '학년 ' + clas + '반',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.05,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
+                      ),
+                      SizedBox(height: screenHeight*0.01,),
+                      Text(nickname + ' 작성',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.04,
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Text('제목',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                        width: screenWidth*1.0,
+                        height: screenHeight*0.08,
+                        decoration: BoxDecoration(
+                            color: const Color(0x69e9f4eb)
+                        ),
+                        child: Text(ssubject),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Text('나의 느낀점(다짐)',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                        width: screenWidth*1.0,
+                        height: screenHeight*0.55,
+                        decoration: BoxDecoration(
+                            color: const Color(0x69e9f4eb)
+                        ),
+                        child: Text(scontent),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: screenHeight*0.01,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -336,22 +365,26 @@ class _ReadPoemState extends State<ReadPoem> {
   }
 
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenHeight*0.08,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenHeight*0.01,
           ),
           Container(
             child: Text(
@@ -361,131 +394,13 @@ class _ReadPoemState extends State<ReadPoem> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.03,
               ),
             ),
           ),
         ],
       ),
     );
-  }
-  _init() async {
-    try {
-      if (await FlutterAudioRecorder.hasPermissions) {
-        String customPath = '/flutter_audio_recorder_';
-        io.Directory appDocDirectory;
-//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
-        if (io.Platform.isIOS) {
-          appDocDirectory = await getApplicationDocumentsDirectory();
-        } else {
-          appDocDirectory = await getExternalStorageDirectory();
-        }
-
-        // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        customPath = appDocDirectory.path +
-            customPath +
-            DateTime.now().millisecondsSinceEpoch.toString();
-
-        // .wav <---> AudioFormat.WAV
-        // .mp4 .m4a .aac <---> AudioFormat.AAC
-        // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
-        _recorder =
-            FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
-
-        await _recorder.initialized;
-        // after initialization
-        var current = await _recorder.current(channel: 0);
-        print(current);
-        // should be "Initialized", if all working fine
-        setState(() {
-          _current = current;
-          _currentStatus = current.status;
-          print(_currentStatus);
-        });
-      } else {
-        Scaffold.of(context).showSnackBar(
-            new SnackBar(content: new Text("You must accept permissions")));
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  _start() async {
-    try {
-      await _recorder.start();
-      var recording = await _recorder.current(channel: 0);
-      setState(() {
-        _current = recording;
-      });
-
-      const tick = const Duration(milliseconds: 50);
-      new Timer.periodic(tick, (Timer t) async {
-        if (_currentStatus == RecordingStatus.Stopped) {
-          t.cancel();
-        }
-
-        var current = await _recorder.current(channel: 0);
-        // print(current.status);
-        setState(() {
-          _current = current;
-          _currentStatus = _current.status;
-        });
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  _resume() async {
-    await _recorder.resume();
-    setState(() {});
-  }
-
-  _pause() async {
-    await _recorder.pause();
-    setState(() {});
-  }
-
-  _stop() async {
-    var result = await _recorder.stop();
-    print("Stop recording: ${result.path}");
-    print("Stop recording: ${result.duration}");
-    File file = widget.localFileSystem.file(result.path);
-    print("File length: ${await file.length()}");
-    setState(() {
-      _current = result;
-      _currentStatus = _current.status;
-    });
-  }
-
-  Widget _buildText(RecordingStatus status) {
-    var text = "";
-    switch (_currentStatus) {
-      case RecordingStatus.Initialized:
-        {
-          text = 'Start';
-          break;
-        }
-      case RecordingStatus.Recording:
-        {
-          text = 'Pause';
-          break;
-        }
-      case RecordingStatus.Paused:
-        {
-          text = 'Resume';
-          break;
-        }
-      case RecordingStatus.Stopped:
-        {
-          text = 'Init';
-          break;
-        }
-      default:
-        break;
-    }
-    return Text(text, style: TextStyle(color: Colors.white));
   }
 
   void onPlayAudio() async {
