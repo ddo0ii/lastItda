@@ -19,11 +19,12 @@ dependencies:
   audio_recorder:
   flutter_sound:
   intl: ^0.16.1
-  path_provider: ^1.6.1
+  path_provider:
   path: ^1.6.4
   permission_handler:
   permissions_plugin:
-
+  file: ^5.0.4
+  audioplayers:
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +32,7 @@ dev_dependencies:
   medcorder_audio:
   permission_handler:
   url_launcher: ^5.4.11
+  flutter_audio_recorder:
 
 flutter:
   uses-material-design: true

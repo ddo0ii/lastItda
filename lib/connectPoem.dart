@@ -16,6 +16,7 @@ class ConnectPoem extends StatefulWidget {
 
 class _ConnectPoemState extends State<ConnectPoem> {
   String poemKey="";
+  String poeKey = "";
   Firestore _firestore = Firestore.instance;
   FirebaseUser user ;
   String email="이메일";
@@ -253,41 +254,4 @@ class _ConnectPoemState extends State<ConnectPoem> {
       ),
     );
   }
-}
-
-class SRecord{
-  final String nickname;
-  final String school;
-  final String clas;
-  final String grade;
-  final String email;
-  final String ssubject;
-  final String scontent;
-  final String srecord;
-  final String sindexing;
-
-  SRecord.fromMap(Map<String, dynamic> map)
-      : assert(map['nickname'] != null),
-        assert(map['schoolname'] != null),
-        assert(map['class'] != null),
-        assert(map['grade'] != null),
-        assert(map['email'] != null),
-        assert(map['ssubject'] != null),
-        assert(map['scontent'] != null),
-        assert(map['srecord'] != null),
-        assert(map['sindexing'] != null),
-
-        nickname = map['nickname'],
-        school = map['schoolname'],
-        clas = map['class'],
-        email =map['email'],
-        grade = map['grade'],
-        ssubject =map['ssubject'],
-        scontent =map['scontent'],
-        srecord =map['srecord'],
-        sindexing =map['sindexing'];
-
-  SRecord.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data);
-
 }

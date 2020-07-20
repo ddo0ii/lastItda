@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,10 +7,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:medcorder_audio/medcorder_audio.dart';
 import 'package:itda/help.dart';
+import 'package:itda/connectPoem.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:itda/help.dart';
 
 class ReadPoem extends StatefulWidget {
-  String poemKey;
-  ReadPoem({Key key,@required this.poemKey}) : super(key: key);
+  String poemKey="키";
+  final LocalFileSystem localFileSystem;
+  ReadPoem({Key key,@required this.poemKey, this.localFileSystem}) : super(key: key);
   @override
   _ReadPoemState createState() => _ReadPoemState();
 }
@@ -25,6 +35,11 @@ class _ReadPoemState extends State<ReadPoem> {
   int point = -1;
   dynamic data;
   final _formKey = GlobalKey<FormState>();
+
+
+  FlutterAudioRecorder _recorder;
+  Recording _current;
+  RecordingStatus _currentStatus = RecordingStatus.Unset;
 
   MedcorderAudio audioModule = new MedcorderAudio();
   bool canRecord = false;
@@ -89,40 +104,6 @@ class _ReadPoemState extends State<ReadPoem> {
     return;
   }
 
-  Future _startStopPlay() async {
-    if (isPlay) {
-      await audioModule.stopPlay();
-    } else {
-      await audioModule.startPlay({
-        "file": srecord,
-        "position": 0.0,
-      });
-    }
-  }
-
-  void _onEvent(dynamic event) {
-    if (event['code'] == 'recording') {
-      double power = event['peakPowerForChannel'];
-      setState(() {
-        recordPower = (60.0 - power.abs().floor()).abs();
-        recordPosition = event['currentTime'];
-      });
-    }
-    if (event['code'] == 'playing') {
-      String url = event['url'];
-      setState(() {
-        playPosition = event['currentTime'];
-        isPlay = true;
-      });
-    }
-    if (event['code'] == 'audioPlayerDidFinishPlaying') {
-      setState(() {
-        playPosition = 0.0;
-        isPlay = false;
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -130,9 +111,6 @@ class _ReadPoemState extends State<ReadPoem> {
     getStory();
     _poemPrepareService();
 
-    audioModule.setCallBack((dynamic redata) {
-      _onEvent(redata);
-    });
     _initSettings();
   }
 
@@ -240,104 +218,12 @@ class _ReadPoemState extends State<ReadPoem> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(width: 30.0,),
-                      Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              child: InkWell(
-                                child: Container(
-                                  child: isPlay ?
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        child: IconButton(
-                                          icon: Icon(Icons.stop),
-                                          color: Colors.white,
-                                          iconSize: 35.0,
-                                          onPressed: () {
-                                            print('정지');
-                                          },
-                                        ),
-                                        //color: Colors.white,
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          '  멈추기',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Arita-dotum-_OTF",
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 9,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                    ],
-                                  )
-                                      :
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        child: IconButton(
-                                          icon: Icon(Icons.play_arrow),
-                                          color: Colors.white,
-                                          iconSize: 35.0,
-                                          onPressed: () {
-                                            print('녹음듣기');
-                                          },
-                                        ),
-                                        //color: Colors.white,
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          '  녹음 듣기',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Arita-dotum-_OTF",
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: () {
-                                  if (!isRecord && file.length > 0) {
-                                    _startStopPlay();
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                      new FlatButton(
+                        onPressed: onPlayAudio,
+                        child:
+                        new Text("Play", style: TextStyle(color: Colors.white)),
+                        color: Colors.blueAccent.withOpacity(0.5),
                       ),
-                      Container(width: 30.0,),
-                      Text('playing: ' + playPosition.toString()),
                     ],
                   ),
                 ),
@@ -482,5 +368,128 @@ class _ReadPoemState extends State<ReadPoem> {
         ],
       ),
     );
+  }
+  _init() async {
+    try {
+      if (await FlutterAudioRecorder.hasPermissions) {
+        String customPath = '/flutter_audio_recorder_';
+        io.Directory appDocDirectory;
+//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
+        if (io.Platform.isIOS) {
+          appDocDirectory = await getApplicationDocumentsDirectory();
+        } else {
+          appDocDirectory = await getExternalStorageDirectory();
+        }
+
+        // can add extension like ".mp4" ".wav" ".m4a" ".aac"
+        customPath = appDocDirectory.path +
+            customPath +
+            DateTime.now().millisecondsSinceEpoch.toString();
+
+        // .wav <---> AudioFormat.WAV
+        // .mp4 .m4a .aac <---> AudioFormat.AAC
+        // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
+        _recorder =
+            FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
+
+        await _recorder.initialized;
+        // after initialization
+        var current = await _recorder.current(channel: 0);
+        print(current);
+        // should be "Initialized", if all working fine
+        setState(() {
+          _current = current;
+          _currentStatus = current.status;
+          print(_currentStatus);
+        });
+      } else {
+        Scaffold.of(context).showSnackBar(
+            new SnackBar(content: new Text("You must accept permissions")));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _start() async {
+    try {
+      await _recorder.start();
+      var recording = await _recorder.current(channel: 0);
+      setState(() {
+        _current = recording;
+      });
+
+      const tick = const Duration(milliseconds: 50);
+      new Timer.periodic(tick, (Timer t) async {
+        if (_currentStatus == RecordingStatus.Stopped) {
+          t.cancel();
+        }
+
+        var current = await _recorder.current(channel: 0);
+        // print(current.status);
+        setState(() {
+          _current = current;
+          _currentStatus = _current.status;
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _resume() async {
+    await _recorder.resume();
+    setState(() {});
+  }
+
+  _pause() async {
+    await _recorder.pause();
+    setState(() {});
+  }
+
+  _stop() async {
+    var result = await _recorder.stop();
+    print("Stop recording: ${result.path}");
+    print("Stop recording: ${result.duration}");
+    File file = widget.localFileSystem.file(result.path);
+    print("File length: ${await file.length()}");
+    setState(() {
+      _current = result;
+      _currentStatus = _current.status;
+    });
+  }
+
+  Widget _buildText(RecordingStatus status) {
+    var text = "";
+    switch (_currentStatus) {
+      case RecordingStatus.Initialized:
+        {
+          text = 'Start';
+          break;
+        }
+      case RecordingStatus.Recording:
+        {
+          text = 'Pause';
+          break;
+        }
+      case RecordingStatus.Paused:
+        {
+          text = 'Resume';
+          break;
+        }
+      case RecordingStatus.Stopped:
+        {
+          text = 'Init';
+          break;
+        }
+      default:
+        break;
+    }
+    return Text(text, style: TextStyle(color: Colors.white));
+  }
+
+  void onPlayAudio() async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play(srecord, isLocal: true);
   }
 }
