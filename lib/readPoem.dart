@@ -217,8 +217,6 @@ class _ReadPoemState extends State<ReadPoem> {
                     children: <Widget>[
                       Container(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(width: screenWidth*0.04),
                             Container(
@@ -255,6 +253,29 @@ class _ReadPoemState extends State<ReadPoem> {
                                 ),
                               ),
                             ),
+                            SizedBox(width: screenWidth*0.35,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                SizedBox(height: screenHeight*0.01,),
+                                Text(school + '  ' + grade + '학년 ' + clas + '반',
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight*0.01,),
+                                Text(nickname + ' 작성',
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.03,
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         //width: 200.0,
@@ -265,7 +286,7 @@ class _ReadPoemState extends State<ReadPoem> {
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                   width: screenWidth*1.0,
-                  height: screenHeight*0.9,
+                  height: screenHeight*0.65,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -276,22 +297,6 @@ class _ReadPoemState extends State<ReadPoem> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: screenHeight*0.01,),
-                      Text(school + '  ' + grade + '학년 ' + clas + '반',
-                        style: TextStyle(
-                          fontSize: screenWidth*0.05,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(height: screenHeight*0.01,),
-                      Text(nickname + ' 작성',
-                        style: TextStyle(
-                          fontSize: screenWidth*0.04,
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
                       SizedBox(height: screenHeight*0.02,),
                       Text('제목',
                         style: TextStyle(
@@ -322,7 +327,7 @@ class _ReadPoemState extends State<ReadPoem> {
                       Container(
                         padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                         width: screenWidth*1.0,
-                        height: screenHeight*0.55,
+                        height: screenHeight*0.4,
                         decoration: BoxDecoration(
                             color: const Color(0x69e9f4eb)
                         ),
@@ -346,7 +351,7 @@ class _ReadPoemState extends State<ReadPoem> {
                             bottomRight: Radius.circular(5.0),
                           ),
                         ),
-                        child: GestureDetector(
+                        child: InkWell(
                           child: _wPBuildConnectItem('assets/list.png','목록'),
                           onTap: () {
                             Navigator.pop(context);

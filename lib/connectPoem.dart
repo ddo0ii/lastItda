@@ -157,7 +157,7 @@ class _ConnectPoemState extends State<ConnectPoem> {
                         bottomLeft: Radius.circular(5.0),
                       ),
                     ),
-                    child: GestureDetector(
+                    child: InkWell(
                       child: _wPBuildConnectItem('assets/itda_orange.png', '글쓰기'),
                       onTap: () => {
                         poemSettingDocument(),

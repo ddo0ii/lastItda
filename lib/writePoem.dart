@@ -412,13 +412,11 @@ class _WritePoemState extends State<WritePoem> {
                           ),
                         ),
                         child: InkWell(
-                          child: GestureDetector(
-                            child: _wPBuildConnectItem('assets/itda_orange.png','잇기(올리기)'),
-                            onTap: () {
-                              poemSetTapping();
-                              Navigator.pop(context, MaterialPageRoute(builder: (context) => ConnectPoem()));
-                            },
-                          ),
+                          child: _wPBuildConnectItem('assets/itda_orange.png','잇기(올리기)'),
+                          onTap: () {
+                            poemSetTapping();
+                            Navigator.pop(context, MaterialPageRoute(builder: (context) => ConnectPoem()));
+                          },
                         ),
                       ),
                       Container(

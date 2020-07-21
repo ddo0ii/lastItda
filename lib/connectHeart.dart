@@ -71,6 +71,10 @@ class _ConnectHeartState extends State<ConnectHeart> {
   }
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     checkPermissions(context);
     return Scaffold(
       backgroundColor: Color(0xffe9f4eb),
@@ -111,16 +115,16 @@ class _ConnectHeartState extends State<ConnectHeart> {
       ),
       body: ListView(
         children: <Widget>[
+          Container(height: screenHeight*0.04,),
           Container(
-            padding: EdgeInsets.fromLTRB(60, 40, 60, 0),
             child: Text(
-                "시, 이야기, 노래를 통해 나의 마음을 다스리고 상대방을 이해하기 위해 노력해 보아요!",
+                "시, 이야기, 노래를 통해 나의 마음을 다스리고\n 상대방을 이해하기 위해 노력해 보아요!",
                 style: TextStyle(
                   color: Color(0xff000000),
                   fontWeight: FontWeight.w700,
                   fontFamily: "Arita-dotum-_OTF",
                   fontStyle: FontStyle.normal,
-                  fontSize: 14,
+                  fontSize: screenWidth*0.04,
                 ),
                 textAlign: TextAlign.center
             ),
@@ -131,7 +135,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                  width: 140,
+                  width: screenWidth*0.35,
                   child: Divider(thickness: 1),
                 ),
                 Container(
@@ -139,42 +143,42 @@ class _ConnectHeartState extends State<ConnectHeart> {
                   child: Icon(
                     Icons.star,
                     color: Color(0xfffbb359),
-                    size: 17,
+                    size: screenWidth*0.05,
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  width: 140,
+                  width: screenWidth*0.35,
                   child: Divider(thickness: 1),
                 ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(70, 10, 70, 0),
             child: Text(
-                "나의 마음을 시, 이야기 노래로 녹음하여 다른 학교 친구들과 나눌 수 있어요 함께 해볼까요? ",
+                "나의 마음을 시, 이야기 노래로 녹음하여\n다른 학교 친구들과 나눌 수 있어요 함께 해볼까요? ",
                 style: TextStyle(
                   color: Color(0xff000000),
                   fontWeight: FontWeight.w500,
                   fontFamily: "Arita-dotum-_OTF",
                   fontStyle: FontStyle.normal,
-                  fontSize: 11,
+                  fontSize: screenWidth*0.03,
                 ),
                 textAlign: TextAlign.center
             ),
           ),
-          SizedBox(height: 50.0,),
+          SizedBox(height: screenHeight*0.04),
           Container(
-            height: MediaQuery.of(context).size.height - 100.0,
+            height: screenHeight*0.7,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0)),
             ),
             child: ListView(
-              padding: EdgeInsets.fromLTRB(100, 60, 0, 0),
+              padding: EdgeInsets.fromLTRB(screenWidth*0.25, 0, 0, 0),
               children: <Widget>[
-                GestureDetector(
+                SizedBox(height: screenHeight*0.1,),
+                InkWell(
                   child: _buildConnectItem('assets/ink.png', '시로 마음을 잇다'),
                   onTap: () {
                     Navigator.push(
@@ -182,8 +186,8 @@ class _ConnectHeartState extends State<ConnectHeart> {
                         MaterialPageRoute(builder: (context) => ConnectPoem()));
                   },
                 ),
-                SizedBox(height: 30.0,),
-                GestureDetector(
+                SizedBox(height: screenHeight*0.04,),
+                InkWell(
                   child: _buildConnectItem('assets/bookline.png', '이야기로 마음을 잇다'),
                   onTap: () {
                     Navigator.push(
@@ -191,8 +195,8 @@ class _ConnectHeartState extends State<ConnectHeart> {
                         MaterialPageRoute(builder: (context) => ConnectStory()));
                   },
                 ),
-                SizedBox(height: 30.0,),
-                GestureDetector(
+                SizedBox(height: screenHeight*0.04,),
+                InkWell(
                   child: _buildConnectItem('assets/music.png', '노래로 마음을 잇다'),
                   onTap: () {
                     Navigator.push(
@@ -210,9 +214,12 @@ class _ConnectHeartState extends State<ConnectHeart> {
 
 
   Widget _buildConnectItem(String imgPath, String linkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
-      width: 250,
-      height: 100.0,
+      height: screenHeight*0.15,
       decoration: BoxDecoration(
         boxShadow: [BoxShadow(
           color: Color(0xffb5c8bc),
@@ -227,19 +234,17 @@ class _ConnectHeartState extends State<ConnectHeart> {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width:50.0,
-          ),
-          Container(
-            width: 35,
-            height: 35,
+            width : screenWidth*0.08,
+            height: screenHeight*0.08,
             child: Image.asset(imgPath),
             //color: Colors.white,
           ),
           Container(
-            width:20.0,
+            width : screenWidth*0.06,
           ),
           Container(
             child: Text(
@@ -249,7 +254,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 17,
+                fontSize: screenWidth*0.047,
               ),
             ),
           ),

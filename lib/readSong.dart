@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,10 +7,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:medcorder_audio/medcorder_audio.dart';
 import 'package:itda/help.dart';
+import 'package:itda/connectSong.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:itda/help.dart';
 
 class ReadSong extends StatefulWidget {
-  String songKey;
-  ReadSong({Key key,@required this.songKey}) : super(key: key);
+  String songKey="키";
+  final LocalFileSystem localFileSystem;
+  ReadSong({Key key,@required this.songKey, this.localFileSystem}) : super(key: key);
   @override
   _ReadSongState createState() => _ReadSongState();
 }
@@ -25,6 +35,11 @@ class _ReadSongState extends State<ReadSong> {
   int point = -1;
   dynamic data;
   final _formKey = GlobalKey<FormState>();
+
+
+  FlutterAudioRecorder _recorder;
+  Recording _current;
+  RecordingStatus _currentStatus = RecordingStatus.Unset;
 
   MedcorderAudio audioModule = new MedcorderAudio();
   bool canRecord = false;
@@ -60,7 +75,7 @@ class _ReadSongState extends State<ReadSong> {
   FirebaseUser _songfireUser;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-  Future<String> getSong () async {
+  Future<String> getStory () async {
     _songfireUser = await FirebaseAuth.instance.currentUser();
     DocumentReference documentReference =  Firestore.instance.collection("songList").document(widget.songKey);
     await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
@@ -89,53 +104,15 @@ class _ReadSongState extends State<ReadSong> {
     return;
   }
 
-  Future _startStopPlay() async {
-    if (isPlay) {
-      await audioModule.stopPlay();
-    } else {
-      await audioModule.startPlay({
-        "file": srecord,
-        "position": 0.0,
-      });
-    }
-  }
-
-  void _onEvent(dynamic event) {
-    if (event['code'] == 'recording') {
-      double power = event['peakPowerForChannel'];
-      setState(() {
-        recordPower = (60.0 - power.abs().floor()).abs();
-        recordPosition = event['currentTime'];
-      });
-    }
-    if (event['code'] == 'playing') {
-      String url = event['url'];
-      setState(() {
-        playPosition = event['currentTime'];
-        isPlay = true;
-      });
-    }
-    if (event['code'] == 'audioPlayerDidFinishPlaying') {
-      setState(() {
-        playPosition = 0.0;
-        isPlay = false;
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     getUser();
-    getSong();
+    getStory();
     _songPrepareService();
 
-    audioModule.setCallBack((dynamic redata) {
-      _onEvent(redata);
-    });
     _initSettings();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -188,11 +165,10 @@ class _ReadSongState extends State<ReadSong> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 50.0,),
+                SizedBox(height: screenHeight*0.08,),
                 Container(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  width: 200,
-                  height: 40,
+                  width: screenWidth*0.6,
+                  height: screenHeight*0.06,
                   decoration: BoxDecoration(
                     boxShadow: [BoxShadow(
                       color: Color(0xffb5c8bc),
@@ -208,14 +184,12 @@ class _ReadSongState extends State<ReadSong> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        width: 20,
-                        height: 20,
+                        width: screenWidth*0.065,
+                        height: screenHeight*0.065,
                         child: Image.asset('assets/ink.png'),
                         //color: Colors.white,
                       ),
-                      Container(
-                        width:20.0,
-                      ),
+                      Container(width: screenWidth*0.05),
                       Container(
                         child: Text(
                           '노래로 마음을 잇다',
@@ -224,7 +198,7 @@ class _ReadSongState extends State<ReadSong> {
                             fontWeight: FontWeight.w700,
                             fontFamily: "Arita-dotum-_OTF",
                             fontStyle: FontStyle.normal,
-                            fontSize: 15,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ),
@@ -232,118 +206,87 @@ class _ReadSongState extends State<ReadSong> {
                   ),
                 ),
                 Container(
-                  height: 70,
+                  height: screenHeight*0.12,
+                  width: screenWidth*1.0,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
                   ),
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(width: 30.0,),
                       Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Row(
                           children: <Widget>[
+                            SizedBox(width: screenWidth*0.04),
                             Container(
                               child: InkWell(
+                                onTap: onPlayAudio,
                                 child: Container(
-                                  child: isPlay ?
-                                  Column(
+                                  child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: 35,
-                                        height: 35,
-                                        child: IconButton(
-                                          icon: Icon(Icons.stop),
-                                          color: Colors.white,
-                                          iconSize: 35.0,
-                                          onPressed: () {
-                                            print('정지');
-                                          },
-                                        ),
+                                        width: screenWidth*0.08,
+                                        height: screenHeight*0.04,
+                                        child: Image.asset('assets/listen.png'),
                                         //color: Colors.white,
                                       ),
                                       Container(
-                                        height: 10.0,
+                                        height: screenHeight*0.01,
                                       ),
                                       Container(
                                         child: Text(
-                                          '  멈추기',
+                                          '녹음 듣기',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: "Arita-dotum-_OTF",
                                             fontStyle: FontStyle.normal,
-                                            fontSize: 9,
+                                            fontSize: screenWidth*0.035,
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                    ],
-                                  )
-                                      :
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        child: IconButton(
-                                          icon: Icon(Icons.play_arrow),
-                                          color: Colors.white,
-                                          iconSize: 35.0,
-                                          onPressed: () {
-                                            print('녹음듣기');
-                                          },
-                                        ),
-                                        //color: Colors.white,
-                                      ),
-                                      Container(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          '  녹음 듣기',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Arita-dotum-_OTF",
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10.0,
                                       ),
                                     ],
                                   ),
                                 ),
-                                onTap: () {
-                                  if (!isRecord && file.length > 0) {
-                                    _startStopPlay();
-                                  }
-                                },
                               ),
+                            ),
+                            SizedBox(width: screenWidth*0.35,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                SizedBox(height: screenHeight*0.01,),
+                                Text(school + '  ' + grade + '학년 ' + clas + '반',
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight*0.01,),
+                                Text(nickname + ' 작성',
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.03,
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
+                        //width: 200.0,
                       ),
-                      Container(width: 30.0,),
-                      Text('playing: ' + playPosition.toString()),
                     ],
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  height: 430.0,
+                  width: screenWidth*1.0,
+                  height: screenHeight*0.65,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -351,72 +294,49 @@ class _ReadSongState extends State<ReadSong> {
                       ),
                       color: const Color(0xffffffff)
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('제목',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(ssubject),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Text('나의 느낀점(다짐)',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(scontent),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Text('녹음파일',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              width: screenWidth - 45.0,
-                              height: 45.0,
-                              decoration: BoxDecoration(
-                                  color: const Color(0x69e9f4eb)
-                              ),
-                              child: Text(srecord),
-                            ),
-                          ],
+                      SizedBox(height: screenHeight*0.02,),
+                      Text('제목',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                        width: screenWidth*1.0,
+                        height: screenHeight*0.08,
+                        decoration: BoxDecoration(
+                            color: const Color(0x69e9f4eb)
+                        ),
+                        child: Text(ssubject),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Text('나의 느낀점(다짐)',
+                        style: TextStyle(
+                          fontSize: screenWidth*0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                        width: screenWidth*1.0,
+                        height: screenHeight*0.4,
+                        decoration: BoxDecoration(
+                            color: const Color(0x69e9f4eb)
+                        ),
+                        child: Text(scontent),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: screenHeight*0.01,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -431,7 +351,7 @@ class _ReadSongState extends State<ReadSong> {
                             bottomRight: Radius.circular(5.0),
                           ),
                         ),
-                        child: GestureDetector(
+                        child: InkWell(
                           child: _wPBuildConnectItem('assets/list.png','목록'),
                           onTap: () {
                             Navigator.pop(context);
@@ -450,22 +370,26 @@ class _ReadSongState extends State<ReadSong> {
   }
 
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenHeight*0.08,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenHeight*0.01,
           ),
           Container(
             child: Text(
@@ -475,12 +399,17 @@ class _ReadSongState extends State<ReadSong> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.03,
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void onPlayAudio() async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play(srecord, isLocal: true);
   }
 }

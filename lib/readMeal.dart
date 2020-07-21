@@ -352,7 +352,7 @@ class _ReadMealState extends State<ReadMeal> {
                           bottomLeft: Radius.circular(5.0),
                         ),
                       ),
-                      child: GestureDetector(
+                      child: InkWell(
                         child: _wPBuildConnectItem('assets/itda_orange.png', '목록으로 돌아가기'),
                         onTap: () async{
                           Navigator.pop(context);

@@ -6,8 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itda/help.dart';
-import 'package:itda/readStory.dart';
 import 'package:itda/writeStory.dart';
+import 'readStory.dart';
 
 class ConnectStory extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ class ConnectStory extends StatefulWidget {
 
 class _ConnectStoryState extends State<ConnectStory> {
   String storyKey="";
+  String poeKey = "";
   Firestore _firestore = Firestore.instance;
   FirebaseUser user ;
   String email="이메일";
@@ -59,6 +60,10 @@ class _ConnectStoryState extends State<ConnectStory> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -101,11 +106,11 @@ class _ConnectStoryState extends State<ConnectStory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            SizedBox(height: 50.0,),
+            SizedBox(height: screenHeight*0.08,),
             Container(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              width: 200,
-              height: 40,
+              width: screenWidth*0.6,
+              height: screenHeight*0.06,
               decoration: BoxDecoration(
                 color: Color(0xff53975c),
                 borderRadius: BorderRadius.only(
@@ -117,14 +122,12 @@ class _ConnectStoryState extends State<ConnectStory> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 20,
-                    height: 20,
+                    width: screenWidth*0.065,
+                    height: screenHeight*0.065,
                     child: Image.asset('assets/ink.png'),
                     //color: Colors.white,
                   ),
-                  Container(
-                    width: 20.0,
-                  ),
+                  Container(width: screenWidth*0.05),
                   Container(
                     child: Text(
                       '이야기로 마음을 잇다',
@@ -133,7 +136,7 @@ class _ConnectStoryState extends State<ConnectStory> {
                         fontWeight: FontWeight.w700,
                         fontFamily: "Arita-dotum-_OTF",
                         fontStyle: FontStyle.normal,
-                        fontSize: 15,
+                        fontSize: screenWidth*0.04,
                       ),
                     ),
                   ),
@@ -141,7 +144,7 @@ class _ConnectStoryState extends State<ConnectStory> {
               ),
             ),
             _slist(),
-            SizedBox(height: 10.0,),
+            SizedBox(height: screenHeight*0.01,),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -154,7 +157,7 @@ class _ConnectStoryState extends State<ConnectStory> {
                         bottomLeft: Radius.circular(5.0),
                       ),
                     ),
-                    child: GestureDetector(
+                    child: InkWell(
                       child: _wPBuildConnectItem('assets/itda_orange.png', '글쓰기'),
                       onTap: () => {
                         storySettingDocument(),
@@ -170,22 +173,26 @@ class _ConnectStoryState extends State<ConnectStory> {
     );
   }
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenHeight*0.08,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenHeight*0.01,
           ),
           Container(
             child: Text(
@@ -195,7 +202,7 @@ class _ConnectStoryState extends State<ConnectStory> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.03,
               ),
             ),
           ),
@@ -204,6 +211,10 @@ class _ConnectStoryState extends State<ConnectStory> {
     );
   }
   Widget _slist () {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('storyList').snapshots(),
@@ -226,15 +237,15 @@ class _ConnectStoryState extends State<ConnectStory> {
                       children: <Widget>[
                         Text(item['nickname'],
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: screenWidth*0.055,
                             fontWeight: FontWeight.bold,
                             //color: Colors.black,
                           ),
                         ),
-                        Container(width: 10.0,),
+                        Container(width: screenWidth*0.02,),
                         Text(item['school'],
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ],
@@ -253,41 +264,4 @@ class _ConnectStoryState extends State<ConnectStory> {
       ),
     );
   }
-}
-
-class SRecord{
-  final String nickname;
-  final String school;
-  final String clas;
-  final String grade;
-  final String email;
-  final String ssubject;
-  final String scontent;
-  final String srecord;
-  final String sindexing;
-
-  SRecord.fromMap(Map<String, dynamic> map)
-      : assert(map['nickname'] != null),
-        assert(map['schoolname'] != null),
-        assert(map['class'] != null),
-        assert(map['grade'] != null),
-        assert(map['email'] != null),
-        assert(map['ssubject'] != null),
-        assert(map['scontent'] != null),
-        assert(map['srecord'] != null),
-        assert(map['sindexing'] != null),
-
-        nickname = map['nickname'],
-        school = map['schoolname'],
-        clas = map['class'],
-        email =map['email'],
-        grade = map['grade'],
-        ssubject =map['ssubject'],
-        scontent =map['scontent'],
-        srecord =map['srecord'],
-        sindexing =map['sindexing'];
-
-  SRecord.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data);
-
 }
