@@ -117,6 +117,10 @@ class _ReadMealState extends State<ReadMeal> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -161,7 +165,7 @@ class _ReadMealState extends State<ReadMeal> {
               Container(
                 child: Image(
                   image: AssetImage('assets/oneline.png'),
-                  height: 50.0,
+                  height: screenHeight*0.07,
                 ),
               ),
               Container(
@@ -174,14 +178,12 @@ class _ReadMealState extends State<ReadMeal> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            width: 45,
-                            height: 45,
+                            width: screenWidth*0.12,
+                            height: screenWidth*0.12,
                             child: Image.asset('assets/rice_green.png'),
                             //color: Colors.white,
                           ),
-                          Container(
-                            height: 10.0,
-                          ),
+                          Container(height: screenHeight*0.015,),
                           Container(
                             child: Text(
                               '우리들의 식단',
@@ -190,34 +192,34 @@ class _ReadMealState extends State<ReadMeal> {
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "Arita-dotum-_OTF",
                                 fontStyle: FontStyle.normal,
-                                fontSize: 15,
+                                fontSize: screenWidth*0.04,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
+                    Container(height: screenHeight*0.015,),
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                            width: 140,
+                            padding: EdgeInsets.fromLTRB(0, 00, 10, 0),
+                            width: screenWidth*0.35,
                             child: Divider(thickness: 1),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            padding: EdgeInsets.fromLTRB(0, 00, 0, 0),
                             child: Icon(
                               Icons.star,
                               color: Color(0xfffbb359),
-                              size: 17,
+                              size: screenWidth*0.07,
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                            width: 140,
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            width: screenWidth*0.35,
                             child: Divider(thickness: 1),
                           ),
                         ],
@@ -230,12 +232,12 @@ class _ReadMealState extends State<ReadMeal> {
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 10.0),
+                    Container(height: screenHeight*0.01,),
                     Container(
-                      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      width: 350.0,
-                      height: 270.0,
+                      width: screenWidth*0.9,
+                      height: screenHeight*0.4,
                       decoration: BoxDecoration(
                         color: Color(0xfff2f2f2),
                         borderRadius: BorderRadius.only(
@@ -246,6 +248,8 @@ class _ReadMealState extends State<ReadMeal> {
                         ),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             child: Row(
@@ -258,9 +262,7 @@ class _ReadMealState extends State<ReadMeal> {
                               ],
                             ),
                           ),
-                          Container(
-                            height: 10.0,
-                          ),
+                          Container(height: screenHeight*0.015,),
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -274,17 +276,14 @@ class _ReadMealState extends State<ReadMeal> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        //mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          Container(height: screenHeight*0.015,),
                           Container(
-                            height: 20.0,
-                          ),
-                          Container(
-                            width: 100.0,
-                            height: 30.0,
+                            width: screenWidth*0.3,
+                            height: screenWidth*0.1,
                             decoration: BoxDecoration(
                                 color: const Color(0xfffbb359)
                             ),
@@ -299,16 +298,15 @@ class _ReadMealState extends State<ReadMeal> {
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Arita-dotum-_OTF",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 15,
+                                    fontSize: screenWidth*0.045,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            width: 300.0,
-                            height: 100.0,
+                            width: screenWidth*0.8,
+                            height: screenWidth*0.35,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: Color(0xfffbb359)
@@ -341,10 +339,10 @@ class _ReadMealState extends State<ReadMeal> {
                         ],
                       ),
                     ),
-                    Container(height: 10.0,),
+                    Container(height: screenHeight*0.015,),
                     Container(
-                      width: 300.0,
-                      height: 50.0,
+                      width: screenWidth*0.8,
+                      height: screenHeight*0.08,
                       decoration: BoxDecoration(
                         color: Color(0xfffff7ef),
                         borderRadius: BorderRadius.only(
@@ -359,7 +357,7 @@ class _ReadMealState extends State<ReadMeal> {
                         },
                       ),
                     ),
-                    Container(height: 10.0,),
+                    Container(height: screenWidth*0.02,),
                   ],
                 ),
               ),
@@ -370,22 +368,23 @@ class _ReadMealState extends State<ReadMeal> {
     );
   }
   Widget _wPBuildConnectItem( String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
-      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.08,
+            height: screenWidth*0.08,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenWidth*0.004,
           ),
           Container(
             child: Text(
@@ -395,7 +394,7 @@ class _ReadMealState extends State<ReadMeal> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.025,
               ),
             ),
           ),
@@ -415,13 +414,13 @@ class _ReadMealState extends State<ReadMeal> {
           Column(
             children: <Widget>[
               Container(
-                height: 80.0,
-                width: (screenWidth-40.0)/4.0,
+                height: screenHeight*0.12,
+                width: screenWidth*0.8/4.0,
                 child: sImgPath == null ?
                 Container(child: Image.asset('assets/add_photo.png'),)
                     : Container(
-                  height: 80.0,
-                  width: 80.0,
+                  height: screenHeight*0.12,
+                  width: screenWidth*0.8/4.0,
                   decoration: BoxDecoration(
                     color: Color(0xffd1dad5),
                     image: DecorationImage(image: NetworkImage(sImgPath),),
@@ -432,8 +431,8 @@ class _ReadMealState extends State<ReadMeal> {
                 ),
               ),
               Container(
-                height: 30.0,
-                width: (screenWidth-40.0)/4.0,
+                height: screenHeight*0.04,
+                width: screenWidth*0.8/4.0,
                 child: Text(sImgName),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -458,13 +457,13 @@ class _ReadMealState extends State<ReadMeal> {
           Column(
             children: <Widget>[
               Container(
-                height: 100.0,
-                width: (screenWidth-80.0)/2.0,
+                height: screenHeight*0.12,
+                width: screenWidth*0.7/2.0,
                 child: bImgPath == null ?
                 Container(child: Image.asset('assets/add_photo.png'),)
                     : Container(
-                  height: 100.0,
-                  width: 150.0,
+                  height: screenHeight*0.12,
+                  width: screenWidth*0.7/2.0,
                   decoration: BoxDecoration(
                     color: Color(0xffd1dad5),
                     image: DecorationImage(image: NetworkImage(bImgPath),),
@@ -475,8 +474,8 @@ class _ReadMealState extends State<ReadMeal> {
                 ),
               ),
               Container(
-                height: 30.0,
-                width: (screenWidth-80.0)/2.0,
+                height: screenHeight*0.04,
+                width: screenWidth*0.7/2.0,
                 child: Text(bImgName),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -484,12 +483,16 @@ class _ReadMealState extends State<ReadMeal> {
               ),
             ],
           ),
-          Container(width: 2.0,),
+          Container(width: screenWidth*0.01,),
         ],
       ),
     );
   }
   Widget _nutrients(bool nuVal, String nuName){
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -499,7 +502,7 @@ class _ReadMealState extends State<ReadMeal> {
         ),
         Text(nuName,
           style: TextStyle(
-            fontSize: 10,
+            fontSize: screenWidth*0.03,
             color: Colors.black,
           ),
         ),

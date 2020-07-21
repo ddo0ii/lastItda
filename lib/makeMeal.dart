@@ -147,7 +147,7 @@ class _MakeMealState extends State<MakeMeal> {
               Container(
                 child: Image(
                   image: AssetImage('assets/oneline.png'),
-                  height: 50.0,
+                  height: screenWidth*0.1,
                 ),
               ),
               Container(
@@ -160,14 +160,12 @@ class _MakeMealState extends State<MakeMeal> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            width: 45,
-                            height: 45,
+                            width: screenWidth*0.12,
+                            height: screenWidth*0.12,
                             child: Image.asset('assets/rice_green.png'),
                             //color: Colors.white,
                           ),
-                          Container(
-                            height: 10.0,
-                          ),
+                          Container(height: screenWidth*0.02,),
                           Container(
                             child: Text(
                               '우리들의 식단',
@@ -176,34 +174,33 @@ class _MakeMealState extends State<MakeMeal> {
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "Arita-dotum-_OTF",
                                 fontStyle: FontStyle.normal,
-                                fontSize: 15,
+                                fontSize: screenWidth*0.04,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
+                    Container(height: screenWidth*0.02),
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                            width: 140,
+                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            width: screenWidth*0.35,
                             child: Divider(thickness: 1),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Icon(
                               Icons.star,
                               color: Color(0xfffbb359),
-                              size: 17,
+                              size: screenWidth*0.07,
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                            width: 140,
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            width: screenWidth*0.35,
                             child: Divider(thickness: 1),
                           ),
                         ],
@@ -217,11 +214,10 @@ class _MakeMealState extends State<MakeMeal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 50.0),
+                    Container(height: screenWidth*0.02,),
                     Container(
-                      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      width: 350.0,
-                      height: 270.0,
+                      width: screenWidth*0.9,
+                      height: screenWidth*0.8,
                       decoration: BoxDecoration(
                         color: Color(0xfff2f2f2),
                         borderRadius: BorderRadius.only(
@@ -232,6 +228,8 @@ class _MakeMealState extends State<MakeMeal> {
                         ),
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             child: Row(
@@ -244,9 +242,7 @@ class _MakeMealState extends State<MakeMeal> {
                               ],
                             ),
                           ),
-                          Container(
-                            height: 10.0,
-                          ),
+                          Container(height: screenWidth*0.02,),
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -260,17 +256,14 @@ class _MakeMealState extends State<MakeMeal> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        //mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          Container(height: screenWidth*0.02,),
                           Container(
-                            height: 20.0,
-                          ),
-                          Container(
-                            width: 100.0,
-                            height: 30.0,
+                            width: screenWidth*0.3,
+                            height: screenWidth*0.1,
                             decoration: BoxDecoration(
                                 color: const Color(0xfffbb359)
                             ),
@@ -285,16 +278,15 @@ class _MakeMealState extends State<MakeMeal> {
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Arita-dotum-_OTF",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 15,
+                                    fontSize: screenWidth*0.045,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            width: 300.0,
-                            height: 100.0,
+                            width: screenWidth*0.8,
+                            height: screenWidth*0.35,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: Color(0xfffbb359)
@@ -327,10 +319,10 @@ class _MakeMealState extends State<MakeMeal> {
                         ],
                       ),
                     ),
-                    Container(height: 10.0,),
+                    Container(height: screenWidth*0.02,),
                     Container(
-                      width: 300.0,
-                      height: 50.0,
+                      width: screenWidth*0.8,
+                      height: screenWidth*0.15,
                       decoration: BoxDecoration(
                         color: Color(0xfffff7ef),
                         borderRadius: BorderRadius.only(
@@ -344,21 +336,11 @@ class _MakeMealState extends State<MakeMeal> {
                           onTap: () {
                             setTapping();
                             Navigator.pop(context, MaterialPageRoute(builder: (context) => MealList()));
-                            /*
-                            if (_formKey.currentState.validate()) {
-                              Scaffold
-                                  .of(context)
-                                  .showSnackBar(SnackBar(content: Text('Processing Data')));
-                              setTapping();
-                              Navigator.pop(context, MaterialPageRoute(builder: (context) => MealList()));
-                            }
-
- */
-                            },
+                          },
                         ),
                       ),
                     ),
-                    Container(height: 10.0,),
+                    Container(height: screenWidth*0.02,),
                   ],
                 ),
               ),
@@ -460,22 +442,23 @@ class _MakeMealState extends State<MakeMeal> {
     });
   }
   Widget _wPBuildConnectItem( String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
-      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.08,
+            height: screenWidth*0.08,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenWidth*0.004,
           ),
           Container(
             child: Text(
@@ -485,7 +468,7 @@ class _MakeMealState extends State<MakeMeal> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.025,
               ),
             ),
           ),
@@ -509,8 +492,8 @@ class _MakeMealState extends State<MakeMeal> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 1.0),
                   child: Container(
-                    height: 80.0,
-                    width: (screenWidth-40.0)/4.0,
+                    height: screenWidth*0.23,
+                    width: screenWidth*0.8/4.0,
                     child: sImgPath == null ?
                     Container(child: Image.asset('assets/add_photo.png'),)
                         : Image.file(sImgPath),
@@ -524,8 +507,8 @@ class _MakeMealState extends State<MakeMeal> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 1.0),
                   child: Container(
-                    height: 30.0,
-                    width: (screenWidth-40.0)/4.0,
+                    height: screenWidth*0.08,
+                    width: screenWidth*0.8/4.0,
                     child: TextFormField(
                       maxLines: 1,
                       //onChanged: (text) => sImgName = text,
@@ -587,8 +570,8 @@ class _MakeMealState extends State<MakeMeal> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Container(
-                    height: 100.0,
-                    width: (screenWidth-80.0)/2.0,
+                    height: screenWidth*0.23,
+                    width: screenWidth*0.7/2.0,
                     child: bImgPath == null ?
                     Container(child: Image.asset('assets/add_photo.png'),)
                         : Image.file(bImgPath),
@@ -602,8 +585,8 @@ class _MakeMealState extends State<MakeMeal> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 1.0),
                   child: Container(
-                    height: 30.0,
-                    width: (screenWidth-80.0)/2.0,
+                    height: screenWidth*0.09,
+                    width: screenWidth*0.7/2.0,
                     child: TextFormField(
                       maxLines: 1,
                       onChanged: (String value) {
@@ -643,6 +626,10 @@ class _MakeMealState extends State<MakeMeal> {
     );
   }
   Widget _nutrients(bool nuVal, String nuName){
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -675,7 +662,7 @@ class _MakeMealState extends State<MakeMeal> {
         ),
         Text(nuName,
           style: TextStyle(
-            fontSize: 10,
+            fontSize: screenWidth*0.03,
             color: Colors.black,
           ),
         ),

@@ -75,7 +75,7 @@ class _ReadPoemState extends State<ReadPoem> {
   FirebaseUser _poemfireUser;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-  Future<String> getStory () async {
+  Future<String> getPoem () async {
     _poemfireUser = await FirebaseAuth.instance.currentUser();
     DocumentReference documentReference =  Firestore.instance.collection("poemList").document(widget.poemKey);
     await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
@@ -108,7 +108,7 @@ class _ReadPoemState extends State<ReadPoem> {
   void initState() {
     super.initState();
     getUser();
-    getStory();
+    getPoem();
     _poemPrepareService();
 
     _initSettings();

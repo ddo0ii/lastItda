@@ -60,6 +60,10 @@ class _MealListState extends State<MealList> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -103,7 +107,7 @@ class _MealListState extends State<MealList> {
             Container(
               child: Image(
                 image: AssetImage('assets/oneline.png'),
-                height: 50.0,
+                height: screenWidth*0.15,
               ),
             ),
             Container(
@@ -116,13 +120,13 @@ class _MealListState extends State<MealList> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: 45,
-                          height: 45,
+                          width: screenWidth*0.12,
+                          height: screenWidth*0.12,
                           child: Image.asset('assets/rice_green.png'),
                           //color: Colors.white,
                         ),
                         Container(
-                          width: 10.0,
+                          width: screenWidth*0.05,
                         ),
                         Container(
                           child: Text(
@@ -132,41 +136,40 @@ class _MealListState extends State<MealList> {
                               fontWeight: FontWeight.w700,
                               fontFamily: "Arita-dotum-_OTF",
                               fontStyle: FontStyle.normal,
-                              fontSize: 15,
+                              fontSize: screenWidth*0.04,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
+                  Container(height: screenWidth*0.025,),
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                          width: 140,
+                          padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          width: screenWidth*0.35,
                           child: Divider(thickness: 1),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Icon(
                             Icons.star,
                             color: Color(0xfffbb359),
-                            size: 17,
+                            size: screenWidth*0.05,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                          width: 140,
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          width: screenWidth*0.35,
                           child: Divider(thickness: 1),
                         ),
                       ],
                     ),
                   ),
+                  Container(height: screenWidth*0.025,),
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Text(
                         "친구들이 만든 식단은 어떨까요?\n가정에서도, 영양 선생님도 보시고응원해 주세요",
                         style: TextStyle(
@@ -174,7 +177,7 @@ class _MealListState extends State<MealList> {
                           fontWeight: FontWeight.w700,
                           fontFamily: "Arita-dotum-_OTF",
                           fontStyle: FontStyle.normal,
-                          fontSize: 13,
+                          fontSize: screenWidth*0.035,
                         ),
                         textAlign: TextAlign.center
                     ),
@@ -182,9 +185,9 @@ class _MealListState extends State<MealList> {
                 ],
               ),
             ),
-            Container(height: 15.0,),
+            Container(height: screenWidth*0.025,),
             _mlist(),
-            Container(height: 10.0,),
+            Container(height: screenWidth*0.025,),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -205,29 +208,32 @@ class _MealListState extends State<MealList> {
                 ),
               ],
             ),
-            Container(height: 10.0,),
+            Container(height: screenWidth*0.025,),
           ],
         ),
       ),
     );
   }
   Widget _wPBuildConnectItem(String wPimgPath, String wPlinkName) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
-      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      width: 80.0,
-      height: 50.0,
+      width: screenWidth*0.2,
+      height: screenWidth*0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 20,
-            height: 20,
+            width: screenWidth*0.07,
+            height: screenWidth*0.07,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: 3.0,
+            height: screenWidth*0.015,
           ),
           Container(
             child: Text(
@@ -237,7 +243,7 @@ class _MealListState extends State<MealList> {
                 fontWeight: FontWeight.w700,
                 fontFamily: "Arita-dotum-_OTF",
                 fontStyle: FontStyle.normal,
-                fontSize: 8,
+                fontSize: screenWidth*0.025,
               ),
             ),
           ),
@@ -246,6 +252,10 @@ class _MealListState extends State<MealList> {
     );
   }
   Widget _mlist () {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     //final srecord = SRecord.fromSnapshot(data);
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
@@ -268,15 +278,15 @@ class _MealListState extends State<MealList> {
                       children: <Widget>[
                         Text(item['nickname'],
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: screenWidth*0.055,
                             fontWeight: FontWeight.bold,
                             //color: Colors.black,
                           ),
                         ),
-                        Container(width: 10.0,),
+                        Container(width: screenWidth*0.03,),
                         Text(item['school'],
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: screenWidth*0.04,
                           ),
                         ),
                       ],

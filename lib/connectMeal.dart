@@ -120,7 +120,7 @@ class _ConnectMealState extends State<ConnectMeal> {
                                   MaterialPageRoute(builder: (context) => SchoolMeal()));
                             },
                           ),
-                          Container(width: 20.0,),
+                          Container(width: screenWidth*0.05,),
                           InkWell(
                             child: _buildConnectItem('assets/rice_white.png', '우리들의 식단'),
                             onTap: () {

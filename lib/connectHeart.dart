@@ -115,7 +115,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(height: screenHeight*0.04,),
+          Container(height: screenWidth*0.1,),
           Container(
             child: Text(
                 "시, 이야기, 노래를 통해 나의 마음을 다스리고\n 상대방을 이해하기 위해 노력해 보아요!",
@@ -167,9 +167,9 @@ class _ConnectHeartState extends State<ConnectHeart> {
                 textAlign: TextAlign.center
             ),
           ),
-          SizedBox(height: screenHeight*0.04),
+          SizedBox(height: screenWidth*0.1),
           Container(
-            height: screenHeight*0.7,
+            height: screenWidth*1.4,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0)),
@@ -177,7 +177,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
             child: ListView(
               padding: EdgeInsets.fromLTRB(screenWidth*0.25, 0, 0, 0),
               children: <Widget>[
-                SizedBox(height: screenHeight*0.1,),
+                SizedBox(height: screenWidth*0.17,),
                 InkWell(
                   child: _buildConnectItem('assets/ink.png', '시로 마음을 잇다'),
                   onTap: () {
@@ -186,7 +186,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
                         MaterialPageRoute(builder: (context) => ConnectPoem()));
                   },
                 ),
-                SizedBox(height: screenHeight*0.04,),
+                SizedBox(height: screenWidth*0.09,),
                 InkWell(
                   child: _buildConnectItem('assets/bookline.png', '이야기로 마음을 잇다'),
                   onTap: () {
@@ -195,7 +195,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
                         MaterialPageRoute(builder: (context) => ConnectStory()));
                   },
                 ),
-                SizedBox(height: screenHeight*0.04,),
+                SizedBox(height: screenWidth*0.09,),
                 InkWell(
                   child: _buildConnectItem('assets/music.png', '노래로 마음을 잇다'),
                   onTap: () {
@@ -219,7 +219,7 @@ class _ConnectHeartState extends State<ConnectHeart> {
     var screenHeight = queryData.size.height;
     var screenWidth = queryData.size.width;
     return Container(
-      height: screenHeight*0.15,
+      height: screenWidth*0.3,
       decoration: BoxDecoration(
         boxShadow: [BoxShadow(
           color: Color(0xffb5c8bc),
@@ -239,7 +239,6 @@ class _ConnectHeartState extends State<ConnectHeart> {
         children: <Widget>[
           Container(
             width : screenWidth*0.08,
-            height: screenHeight*0.08,
             child: Image.asset(imgPath),
             //color: Colors.white,
           ),

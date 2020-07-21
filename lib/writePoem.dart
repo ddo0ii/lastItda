@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:itda/connectPoem.dart';
 import 'package:medcorder_audio/medcorder_audio.dart';
 import 'package:itda/help.dart';
-import 'package:itda/connectPoem.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -147,11 +147,11 @@ class _WritePoemState extends State<WritePoem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: screenHeight*0.08,),
+                SizedBox(height: screenWidth*0.1,),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   width: screenWidth*0.6,
-                  height: screenHeight*0.06,
+                  height: screenWidth*0.15,
                   decoration: BoxDecoration(
                     boxShadow: [BoxShadow(
                       color: Color(0xffb5c8bc),
@@ -168,7 +168,6 @@ class _WritePoemState extends State<WritePoem> {
                     children: <Widget>[
                       Container(
                         width: screenWidth*0.065,
-                        height: screenHeight*0.065,
                         child: Image.asset('assets/ink.png'),
                         //color: Colors.white,
                       ),
@@ -189,7 +188,7 @@ class _WritePoemState extends State<WritePoem> {
                   ),
                 ),
                 Container(
-                  height: screenHeight*0.15,
+                  height: screenWidth*0.25,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
                   ),
@@ -246,13 +245,12 @@ class _WritePoemState extends State<WritePoem> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: screenWidth*0.08,
-                                        height: screenHeight*0.04,
+                                        width: screenWidth*0.07,
                                         child: Image.asset('assets/stop.png'),
                                         //color: Colors.white,
                                       ),
                                       Container(
-                                        height: screenHeight*0.01,
+                                        height: screenWidth*0.03,
                                       ),
                                       Container(
                                         child: Text(
@@ -262,7 +260,7 @@ class _WritePoemState extends State<WritePoem> {
                                             fontWeight: FontWeight.w700,
                                             fontFamily: "Arita-dotum-_OTF",
                                             fontStyle: FontStyle.normal,
-                                            fontSize: screenWidth*0.035,
+                                            fontSize: screenWidth*0.03,
                                           ),
                                         ),
                                       ),
@@ -281,13 +279,12 @@ class _WritePoemState extends State<WritePoem> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: screenWidth*0.08,
-                                        height: screenHeight*0.04,
+                                        width: screenWidth*0.07,
                                         child: Image.asset('assets/listen.png'),
                                         //color: Colors.white,
                                       ),
                                       Container(
-                                        height: screenHeight*0.01,
+                                        height: screenWidth*0.025,
                                       ),
                                       Container(
                                         child: Text(
@@ -297,7 +294,7 @@ class _WritePoemState extends State<WritePoem> {
                                             fontWeight: FontWeight.w700,
                                             fontFamily: "Arita-dotum-_OTF",
                                             fontStyle: FontStyle.normal,
-                                            fontSize: screenWidth*0.035,
+                                            fontSize: screenWidth*0.03,
                                           ),
                                         ),
                                       ),
@@ -315,7 +312,7 @@ class _WritePoemState extends State<WritePoem> {
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  height: screenHeight*0.6,
+                  height: screenWidth*1.2,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -336,11 +333,11 @@ class _WritePoemState extends State<WritePoem> {
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: screenHeight*0.02,),
+                            SizedBox(height: screenWidth*0.03,),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                               width: screenWidth*0.85,
-                              height: screenHeight*0.08,
+                              height: screenWidth*0.15,
                               decoration: BoxDecoration(
                                   color: const Color(0x69e9f4eb)
                               ),
@@ -360,7 +357,7 @@ class _WritePoemState extends State<WritePoem> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: screenHeight*0.02,),
+                            SizedBox(height: screenWidth*0.03,),
                             Text('나의 느낀점(다짐)',
                               style: TextStyle(
                                 fontSize: screenWidth*0.04,
@@ -368,11 +365,11 @@ class _WritePoemState extends State<WritePoem> {
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: screenHeight*0.02,),
+                            SizedBox(height: screenWidth*0.03,),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                               width: screenWidth*0.85,
-                              height: screenHeight*0.35,
+                              height: screenWidth*0.8,
                               decoration: BoxDecoration(
                                   color: const Color(0x69e9f4eb)
                               ),
@@ -398,7 +395,7 @@ class _WritePoemState extends State<WritePoem> {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight*0.01,),
+                SizedBox(height: screenWidth*0.03,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -408,7 +405,9 @@ class _WritePoemState extends State<WritePoem> {
                           color: Color(0xfffff7ef),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(5.0),
+                            topRight: Radius.circular(5.0),
                             bottomLeft: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0),
                           ),
                         ),
                         child: InkWell(
@@ -419,20 +418,10 @@ class _WritePoemState extends State<WritePoem> {
                           },
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xfffff7ef),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(5.0),
-                            bottomRight: Radius.circular(5.0),
-                          ),
-                        ),
-                        child: _wPBuildConnectItem('assets/hold.png','나만보기'),
-                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight*0.02,),
+                SizedBox(height: screenWidth*0.03,),
               ],
             ),
           ),
@@ -448,19 +437,18 @@ class _WritePoemState extends State<WritePoem> {
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
       width: screenWidth*0.2,
-      height: screenHeight*0.08,
+      height: screenWidth*0.2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             width: screenWidth*0.07,
-            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: screenHeight*0.01,
+            height: screenWidth*0.02,
           ),
           Container(
             child: Text(
@@ -608,13 +596,12 @@ class _WritePoemState extends State<WritePoem> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          width: screenWidth*0.08,
-          height: screenHeight*0.04,
+          width: screenWidth*0.055,
           child: Image.asset(imgText),
           //color: Colors.white,
         ),
         Container(
-          height: screenHeight*0.01,
+          height: screenWidth*0.02,
         ),
         Container(
           child: Text(
@@ -624,7 +611,7 @@ class _WritePoemState extends State<WritePoem> {
               fontWeight: FontWeight.w700,
               fontFamily: "Arita-dotum-_OTF",
               fontStyle: FontStyle.normal,
-              fontSize: screenWidth*0.035,
+              fontSize: screenWidth*0.03,
             ),
           ),
         ),

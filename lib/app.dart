@@ -24,7 +24,7 @@ class ItdaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Itda',
-      home: HomePage(),
+      //home: LoginPage(),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
       // TODO: Add a theme (103)
