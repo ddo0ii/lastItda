@@ -189,7 +189,7 @@ class _WriteStoryState extends State<WriteStory> {
                   ),
                 ),
                 Container(
-                  height: screenHeight*0.12,
+                  height: screenHeight*0.15,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
                   ),

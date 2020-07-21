@@ -53,88 +53,91 @@ class _ConnectMealState extends State<ConnectMeal> {
             ],
           )
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Image(
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Image(
                   image: AssetImage('assets/oneline.png'),
                   height: screenHeight*0.07,
+                ),
               ),
-            ),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(height: screenHeight*0.15,),
-                  Container(
-                    child: Text(
-                        "우리학교 식단을 보고\n내가먹고 싶은 메뉴를 계획하여\n가정과 학교에서 볼 수 있어요.",
-                        style: TextStyle(
-                          color: Color(0xff000000),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Arita-dotum-_OTF",
-                          fontStyle: FontStyle.normal,
-                          fontSize: screenWidth*0.04,
-                        ),
-                        textAlign: TextAlign.center
-                    ),
-                  ),
-                  Container(height: screenHeight*0.015,),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                          width: screenWidth*0.35,
-                          child: Divider(thickness: 1),
-                        ),
-                        Container(
-                          child: Icon(
-                            Icons.star,
-                            color: Color(0xfffbb359),
-                            size: screenWidth*0.05,
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(height: screenHeight*0.15,),
+                    Container(
+                      child: Text(
+                          "우리학교 식단을 보고\n내가먹고 싶은 메뉴를 계획하여\n가정과 학교에서 볼 수 있어요.",
+                          style: TextStyle(
+                            color: Color(0xff000000),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Arita-dotum-_OTF",
+                            fontStyle: FontStyle.normal,
+                            fontSize: screenWidth*0.04,
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          width: screenWidth*0.35,
-                          child: Divider(thickness: 1),
-                        ),
-                      ],
+                          textAlign: TextAlign.center
+                      ),
                     ),
-                  ),
-                  Container(height: screenHeight*0.02,),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                          child: _buildConnectItem('assets/school_white.png', '우리 학교 식단'),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SchoolMeal()));
-                          },
-                        ),
-                        Container(width: 20.0,),
-                        InkWell(
-                          child: _buildConnectItem('assets/rice_white.png', '우리들의 식단'),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MealList()));
-                          },
-                        ),
-                      ],
+                    Container(height: screenHeight*0.015,),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            width: screenWidth*0.35,
+                            child: Divider(thickness: 1),
+                          ),
+                          Container(
+                            child: Icon(
+                              Icons.star,
+                              color: Color(0xfffbb359),
+                              size: screenWidth*0.05,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            width: screenWidth*0.35,
+                            child: Divider(thickness: 1),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    Container(height: screenHeight*0.02,),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                            child: _buildConnectItem('assets/school_white.png', '우리 학교 식단'),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SchoolMeal()));
+                            },
+                          ),
+                          Container(width: 20.0,),
+                          InkWell(
+                            child: _buildConnectItem('assets/rice_white.png', '우리들의 식단'),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MealList()));
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Container(height: screenHeight*0.5,),
+            ],
+          ),
         ),
       ),
 
