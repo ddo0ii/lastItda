@@ -102,15 +102,18 @@ class _GoalPageState extends State<GoalPage> {
           backgroundColor: HexColor("#e9f4eb"),
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: Icon(
-                Icons.edit,
-                color: HexColor("#fbb359"),
+            InkWell(
+              child: IconButton(
+                icon: Icon(
+                  Icons.edit,
+                  color: HexColor("#fbb359"),
+                  //size: 12,
+                ),
               ),
-              onPressed: (){
+              onTap: (){
                 _editChecker();
               },
-            )
+            ),
           ],
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
