@@ -120,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "이메일 (형식: abc@abc.com)",
+                      "이메일 (예: abc@abc.com)",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -273,7 +273,7 @@ class _SignupPageState extends State<SignupPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "학교 입력",
+                      "학교 입력 (예: 포항초등학교)",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -314,7 +314,7 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "학년 입력",
+                          "학년 입력 (예: 4)",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -348,7 +348,7 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "반 입력",
+                          "반 입력 (예: 2)",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

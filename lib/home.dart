@@ -223,7 +223,6 @@ class _HomePageState extends State<HomePage> {
             )
         ),
         body: ListView(
-
           children: <Widget>[
             SizedBox(height: 100),
             Center(
@@ -408,7 +407,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ],
-        )
+        ),
       // TODO: Set resizeToAvoidBottomInset (101)
     );
   }
