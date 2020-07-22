@@ -92,295 +92,293 @@ class _GoalPageState extends State<GoalPage> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
-
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     getUser();
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          AppBar(
-              backgroundColor: HexColor("#e9f4eb"),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: HexColor("#fbb359"),
-                  ),
-                  onPressed: (){
-                    _editChecker();
-                  },
-                )
-              ],
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "목표를 ",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Container(
-                    width: 28,
-                    child: Image.asset("assets/Itda_black.png"),
-                  ),
-                ],
-              )
-          ),
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                Text(
-                  "친구들의 목표를 보며 응원의 댓글을 남기면\n 더 잘할 수 있어요",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
+      appBar: AppBar(
+          backgroundColor: HexColor("#e9f4eb"),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: HexColor("#fbb359"),
+              ),
+              onPressed: (){
+                _editChecker();
+              },
+            )
+          ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "목표를 ",
+                style: TextStyle(
+                  fontSize: screenWidth*0.04,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-                SizedBox(height: 15,),
-                Row(
+              ),
+              Container(
+                width: 28,
+                child: Image.asset("assets/Itda_black.png"),
+              ),
+            ],
+          )
+      ),
+      backgroundColor: Colors.white,
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(height: screenWidth*0.1,),
+              Text(
+                "친구들의 목표를 보며 응원의 댓글을 남기면\n 더 잘할 수 있어요",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Container(height: screenWidth*0.04,),
+              Container(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(0,0,10,0),
-                      width: 150,
+                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      width: screenWidth*0.35,
                       child: Divider(thickness: 1),
                     ),
-                    Icon(
-                      Icons.star,
-                      color: HexColor("#fbb359"),
-                      size: 15,
+                    Container(
+                      child: Icon(
+                        Icons.star,
+                        color: Color(0xfffbb359),
+                        size: screenWidth*0.07,
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(10,0,0,0),
-                      width: 150,
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      width: screenWidth*0.35,
                       child: Divider(thickness: 1),
                     ),
                   ],
                 ),
-                SizedBox(height: 15,),
-                Center(
-                  child: Container(
-                    width: queryData.size.width * 0.6,
-                    height: queryData.size.width * 0.5,
-                    child:  Image.asset(
-                      'assets/tree.png',
-                      fit: BoxFit.contain,
+              ),
+              Container(height: screenWidth*0.04,),
+              Container(
+                width: screenWidth * 0.6,
+                child:  Image.asset(
+                  'assets/tree.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Container(height: screenWidth*0.04,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    nickname,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenWidth*0.05,
+                      color: HexColor("#53975c"),
                     ),
                   ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            nickname,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: HexColor("#53975c"),
-                            ),
-                          ),
-                          Text(
-                              "님의 꿈은"
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            dream,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: HexColor("#fbb359"),
-                            ),
-                          ),
-                          Text(
-                              "입니다"
-                          )
-                        ],
-                      ),
-
-                    ],
+                  Text(
+                      " 님의 꿈은"
+                  )
+                ],
+              ),
+              Container(height: screenWidth*0.02,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    dream,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenWidth*0.05,
+                      color: HexColor("#fbb359"),
+                    ),
                   ),
+                  Text(
+                      " 입니다"
+                  )
+                ],
+              ),
+              Container(height: screenWidth*0.05,),
+              Container(
+                padding: EdgeInsets.all(12),
+                width: screenWidth*0.9,
+                height: screenWidth*1.0,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(5.0) //                 <--- border radius here
+                    ),
+                    border: Border.all(color: HexColor("#96fab259"))
                 ),
-                Container(width: 10.0,),
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  width: queryData.size.width*0.5,
-                  height: queryData.size.height*0.35,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(5.0) //                 <--- border radius here
-                      ),
-                      border: Border.all(color: HexColor("#96fab259"))
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(20,0,0,10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "오늘의 목표",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Theme(
-                              data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
-                              child: Checkbox(
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                checkColor: Colors.white,
-                                activeColor: HexColor("#fab259"),
-                                value: _todayBool,
-                                onChanged: null,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          "오늘의 목표",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth*0.04,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                                width: queryData.size.width*0.85,
-                                height: queryData.size.height*0.04,
-                                decoration: BoxDecoration(
-                                  color: HexColor("#fff7ef"),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(10, 0,0,0),
-                                    ),
-                                    Text(
-                                      today,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text(
-                              "이번 달 의 목표",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Theme(
-                              data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
-                              child: Checkbox(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                  checkColor: Colors.white,
-                                  activeColor: HexColor("#fab259"),
-                                  value: _weekBool,
-                                  onChanged: null
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                                width: queryData.size.width*0.85,
-                                height: queryData.size.height*0.04,
-                                decoration: BoxDecoration(
-                                  color: HexColor("#fff7ef"),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(10, 0,0,0),
-                                    ),
-                                    Text(
-                                      week,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text(
-                              "올해의 목표",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Theme(
-                              data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
-                              child: Checkbox(
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                checkColor: Colors.white,
-                                activeColor: HexColor("#fab259"),
-                                value: _yearBool,
-                                onChanged: null,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                                width: queryData.size.width*0.85,
-                                height: queryData.size.height*0.04,
-                                decoration: BoxDecoration(
-                                  color: HexColor("#fff7ef"),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(10, 0,0,0),
-                                    ),
-                                    Text(
-                                      year,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                          ],
+                        Theme(
+                          data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
+                          child: Checkbox(
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            checkColor: Colors.white,
+                            activeColor: HexColor("#fab259"),
+                            value: _todayBool,
+                            onChanged: null,
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    Container(height: screenWidth*0.02,),
+                    Row(
+                      children: [
+                        Container(
+                            width: screenWidth*0.8,
+                            height: screenWidth*0.13,
+                            decoration: BoxDecoration(
+                              color: HexColor("#fff7ef"),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0,0,0),
+                                ),
+                                Text(
+                                  today,
+                                  style: TextStyle(
+                                      fontSize: screenWidth*0.04,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                    Container(height: screenWidth*0.04,),
+                    Row(
+                      children: [
+                        Text(
+                          "이번 달 의 목표",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth*0.04,
+                          ),
+                        ),
+                        Theme(
+                          data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
+                          child: Checkbox(
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              checkColor: Colors.white,
+                              activeColor: HexColor("#fab259"),
+                              value: _weekBool,
+                              onChanged: null
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(height: screenWidth*0.02,),
+                    Row(
+                      children: [
+                        Container(
+                            width: screenWidth*0.8,
+                            height: screenWidth*0.13,
+                            decoration: BoxDecoration(
+                              color: HexColor("#fff7ef"),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0,0,0),
+                                ),
+                                Text(
+                                  week,
+                                  style: TextStyle(
+                                      fontSize: screenWidth*0.04,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                    Container(height: screenWidth*0.04,),
+                    Row(
+                      children: [
+                        Text(
+                          "올해의 목표",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth*0.04,
+                          ),
+                        ),
+                        Theme(
+                          data: ThemeData(unselectedWidgetColor: HexColor("#fab259")),
+                          child: Checkbox(
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            checkColor: Colors.white,
+                            activeColor: HexColor("#fab259"),
+                            value: _yearBool,
+                            onChanged: null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(height: screenWidth*0.02,),
+                    Row(
+                      children: [
+                        Container(
+                            width: screenWidth*0.8,
+                            height: screenWidth*0.13,
+                            decoration: BoxDecoration(
+                              color: HexColor("#fff7ef"),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0,0,0),
+                                ),
+                                Text(
+                                  year,
+                                  style: TextStyle(
+                                      fontSize: screenWidth*0.04,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Container(height: screenWidth*0.1,),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

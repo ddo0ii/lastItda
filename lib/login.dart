@@ -74,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     Container(
                       width: screenWidth*0.8,
                       height: screenWidth*0.18,
+                      color: HexColor("#e9f4eb"),
                       child: TextFormField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -85,10 +86,11 @@ class _LoginPageState extends State<LoginPage> {
                         onSaved: (value) => _email = value,
                       ),
                     ),
-                    Container(height: screenWidth*0.03,),
+                    Container(height: screenWidth*0.02,),
                     Container(
                       width: screenWidth*0.8,
                       height: screenWidth*0.18,
+                      color: HexColor("#e9f4eb"),
                       child: TextFormField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -108,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ButtonTheme(
-                            minWidth: screenWidth*0.37,
+                            minWidth: screenWidth*0.39,
                             height: screenWidth*0.13,
                             child: RaisedButton(
                               color: Colors.white,
@@ -119,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 '회원가입',
                                 style: TextStyle(
-                                  fontSize: screenWidth*0.035,
+                                  fontSize: screenWidth*0.04,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -130,9 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
                           ),
-                          Container(width: screenWidth*0.06,),
+                          Container(width: screenWidth*0.02,),
                           ButtonTheme(
-                            minWidth: screenWidth*0.37,
+                            minWidth: screenWidth*0.39,
                             height: screenWidth*0.13,
                             child: RaisedButton(
                               color: HexColor("#55965e"),
@@ -142,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 '로그인',
                                 style: TextStyle(
-                                  fontSize: screenWidth*0.035,
+                                  fontSize: screenWidth*0.04,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -192,10 +194,10 @@ class CustomTextField extends StatelessWidget {
         autofocus: true,
         obscureText: obsecure,
         style: TextStyle(
-          fontSize: screenWidth*0.035,
+          fontSize: screenWidth*0.04,
         ),
         decoration: InputDecoration(
-            hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.035),
+            hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.04,),
             hintText: hint,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
