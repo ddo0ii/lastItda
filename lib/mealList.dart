@@ -171,7 +171,7 @@ class _MealListState extends State<MealList> {
                   Container(height: screenWidth*0.025,),
                   Container(
                     child: Text(
-                        "친구들이 만든 식단은 어떨까요?\n가정에서도, 영양 선생님도 보시고응원해 주세요",
+                        "친구들이 만든 식단은 어떨까요?\n가정에서도, 영양 선생님도 보시고 응원해주세요",
                         style: TextStyle(
                           color: Color(0xff000000),
                           fontWeight: FontWeight.w700,

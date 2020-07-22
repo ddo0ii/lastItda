@@ -364,7 +364,7 @@ class _WritePoemState extends State<WritePoem> {
                               ),
                             ),
                             SizedBox(height: screenWidth*0.03,),
-                            Text('나의 느낀점(다짐)',
+                            Text('나의 느낀 점(다짐)',
                               style: TextStyle(
                                 fontSize: screenWidth*0.04,
                                 fontWeight: FontWeight.bold,
@@ -384,13 +384,13 @@ class _WritePoemState extends State<WritePoem> {
                                 onChanged: (text) => scontent = text,
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return '느낀점을 쓰세요';
+                                    return '느낀 점을 쓰세요';
                                   } else
                                     return null;
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: '느낀점을 쓰세요',
+                                  hintText: '느낀 점을 쓰세요',
                                   //labelText: "Enter your username",
                                 ),
                               ),

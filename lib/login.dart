@@ -53,132 +53,114 @@ class _LoginPageState extends State<LoginPage> {
     var screenWidth = queryData.size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: screenHeight*0.2,),
-          Center(
-              child: Container(
-                height: 120,
-                width: 120,
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: screenHeight*0.2,),
+              Container(
+                width: screenWidth*0.25,
                 child: Image.asset('assets/Font.png'),
-              )
-          ),
-          SizedBox(height: screenHeight*0.1,),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-
-                children: <Widget>[
-                  SizedBox(height: screenHeight*0.1,),
-                  Form(
-                    key: _loginKey,
-                    child: Column(
-                      children: <Widget>[
-                        Center(
-                          child: Row(
-                            children: [
-                              Container(
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.fromLTRB(10,0,0,0),
-                                    border: InputBorder.none,
-                                    labelText: '아이디',
-                                    filled: true,
-                                    fillColor: HexColor("#e9f4eb"),
-                                  ),
-                                  validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-                                  onSaved: (value) => _email = value,
-                                ),
-                                width: screenWidth*0.7,
-                              ),
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                          ),
+              ),
+              SizedBox(height: screenHeight*0.28,),
+              Form(
+                key: _loginKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: screenWidth*0.8,
+                      height: screenWidth*0.18,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          labelText: '아이디',
+                          filled: true,
+                          fillColor: HexColor("#e9f4eb"),
                         ),
-                        SizedBox(height: 20,),
-                        Center(
-                          child: Container(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.fromLTRB(10,0,0,0),
-                                border: InputBorder.none,
-                                labelText: '비밀번호',
-                                filled: true,
-                                fillColor: HexColor("#e9f4eb"),
-                              ),
-                              validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-                              onSaved: (value) => _password = value,
-                              obscureText: true,
-                            ),
-                            width: screenWidth*0.7,
-                          ),
-                        ),
-                      ],
+                        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+                        onSaved: (value) => _email = value,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 45,),
-                  Center(
-                    child: Container(
-                      width: screenWidth*0.7,
+                    Container(height: screenWidth*0.03,),
+                    Container(
+                      width: screenWidth*0.8,
+                      height: screenWidth*0.18,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          labelText: '비밀번호',
+                          filled: true,
+                          fillColor: HexColor("#e9f4eb"),
+                        ),
+                        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+                        onSaved: (value) => _password = value,
+                        obscureText: true,
+                      ),
+                    ),
+                    Container(height: screenWidth*0.03,),
+                    Container(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          RaisedButton(
-                            padding: EdgeInsets.fromLTRB(screenWidth*0.1,screenHeight*0.02,screenWidth*0.1,screenHeight*0.02),
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: HexColor("#53975c")),
-                            ),
-                            child: Text(
-                              '회원가입',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                          ButtonTheme(
+                            minWidth: screenWidth*0.37,
+                            height: screenWidth*0.13,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: HexColor("#53975c")),
                               ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => SignupPage()));
-                            },
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                RaisedButton(
-                                  padding: EdgeInsets.fromLTRB(screenWidth*0.11,screenHeight*0.02,screenWidth*0.11,screenHeight*0.02),
-                                  color: HexColor("#55965e"),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Text(
-                                    '로그인',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    validateAndSubmit();
-                                  },
+                              child: Text(
+                                '회원가입',
+                                style: TextStyle(
+                                  fontSize: screenWidth*0.035,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              ],
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SignupPage()));
+                              },
+                            ),
+                          ),
+                          Container(width: screenWidth*0.06,),
+                          ButtonTheme(
+                            minWidth: screenWidth*0.37,
+                            height: screenWidth*0.13,
+                            child: RaisedButton(
+                              color: HexColor("#55965e"),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Text(
+                                '로그인',
+                                style: TextStyle(
+                                  fontSize: screenWidth*0.035,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () {
+                                validateAndSubmit();
+                              },
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -196,20 +178,24 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final bool obsecure;
   final FormFieldValidator<String> validator;
+
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
       child: TextFormField(
         onSaved: onSaved,
         validator: validator,
         autofocus: true,
         obscureText: obsecure,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: screenWidth*0.035,
         ),
         decoration: InputDecoration(
-            hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.035),
             hintText: hint,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),

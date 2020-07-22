@@ -281,7 +281,7 @@ class _GoalPageState extends State<GoalPage> {
                         Row(
                           children: [
                             Text(
-                              "이번 의 목표",
+                              "이번 달 의 목표",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,

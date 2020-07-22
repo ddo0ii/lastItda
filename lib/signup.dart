@@ -73,7 +73,7 @@ class _SignupPageState extends State<SignupPage> {
       'point' : 0,
       'email' : email,
       'today' : "오늘의 목표를 입력해주세요",
-      'week'  : "이번 주의 목표를 입력해주세요",
+      'week'  : "이번 달의 목표를 입력해주세요",
       'year'  : "올해의 목표를 입력해주세요",
       'dream' : dream,
       'todaycheck' : false,
