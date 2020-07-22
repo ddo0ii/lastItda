@@ -16,7 +16,7 @@ class ConnectSong extends StatefulWidget {
 
 class _ConnectSongState extends State<ConnectSong> {
   String songKey="";
-  String poeKey = "";
+  String soKey = "";
   Firestore _firestore = Firestore.instance;
   FirebaseUser user ;
   String email="이메일";

@@ -16,7 +16,7 @@ class ConnectStory extends StatefulWidget {
 
 class _ConnectStoryState extends State<ConnectStory> {
   String storyKey="";
-  String poeKey = "";
+  String stoKey = "";
   Firestore _firestore = Firestore.instance;
   FirebaseUser user ;
   String email="이메일";

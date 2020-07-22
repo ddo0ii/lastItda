@@ -27,6 +27,11 @@ class WriteStory extends StatefulWidget {
 }
 
 class _WriteStoryState extends State<WriteStory> {
+  String semail="이메일";
+  String snickname="닉네임";
+  String sschool = "학교";
+  String sgrade = "학년";
+  String sclas = "반";
   String ssubject="제목";
   String scontent = "내용";
   String srecord = "녹음";
@@ -92,6 +97,7 @@ class _WriteStoryState extends State<WriteStory> {
     await Firestore.instance.collection('storyList').document(widget.storyKey)
         .setData({
       'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade,
+      'semail':email, 'snickname':nickname, 'sschool':school, 'sclas':clas, 'sgrade':grade,
       'ssubject':ssubject, 'scontent':scontent, 'srecord': _current.path, 'sindexing':sindexing,
       'storyKey':widget.storyKey});
   }

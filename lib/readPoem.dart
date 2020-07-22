@@ -64,7 +64,11 @@ class _ReadPoemState extends State<ReadPoem> {
       });
     });
   }
-
+  String semail="이메일";
+  String snickname="닉네임";
+  String sschool = "학교";
+  String sgrade = "학년";
+  String sclas = "반";
   String ssubject = "";
   String scontent = "";
   String srecord = "";
@@ -80,6 +84,11 @@ class _ReadPoemState extends State<ReadPoem> {
     DocumentReference documentReference =  Firestore.instance.collection("poemList").document(widget.poemKey);
     await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
       setState(() {
+        semail =snapshot.data["semail"];
+        snickname =snapshot.data["snickname"];
+        sschool = snapshot.data["sschool"];
+        sgrade = snapshot.data["sgrade"];
+        sclas = snapshot.data["sclas"];
         ssubject = snapshot.data["ssubject"];
         scontent = snapshot.data["scontent"];
         srecord = snapshot.data["srecord"];
@@ -165,10 +174,10 @@ class _ReadPoemState extends State<ReadPoem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: screenHeight*0.08,),
+                SizedBox(height: screenWidth*0.15,),
                 Container(
                   width: screenWidth*0.6,
-                  height: screenHeight*0.06,
+                  height: screenWidth*0.15,
                   decoration: BoxDecoration(
                     boxShadow: [BoxShadow(
                       color: Color(0xffb5c8bc),
@@ -185,7 +194,6 @@ class _ReadPoemState extends State<ReadPoem> {
                     children: <Widget>[
                       Container(
                         width: screenWidth*0.065,
-                        height: screenHeight*0.065,
                         child: Image.asset('assets/ink.png'),
                         //color: Colors.white,
                       ),
@@ -206,7 +214,7 @@ class _ReadPoemState extends State<ReadPoem> {
                   ),
                 ),
                 Container(
-                  height: screenHeight*0.12,
+                  height: screenWidth*0.2,
                   width: screenWidth*1.0,
                   decoration: BoxDecoration(
                       color: const Color(0xffe9f4eb)
@@ -219,6 +227,28 @@ class _ReadPoemState extends State<ReadPoem> {
                         child: Row(
                           children: <Widget>[
                             SizedBox(width: screenWidth*0.04),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("$sschool $sgrade 학년  $sclas 반",
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenWidth*0.02,),
+                                Text("$nickname 작성",
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.03,
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: screenWidth*0.1),
                             Container(
                               child: InkWell(
                                 onTap: onPlayAudio,
@@ -228,13 +258,12 @@ class _ReadPoemState extends State<ReadPoem> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: screenWidth*0.08,
-                                        height: screenHeight*0.04,
+                                        width: screenWidth*0.07,
                                         child: Image.asset('assets/listen.png'),
                                         //color: Colors.white,
                                       ),
                                       Container(
-                                        height: screenHeight*0.01,
+                                        height: screenWidth*0.02,
                                       ),
                                       Container(
                                         child: Text(
@@ -244,7 +273,7 @@ class _ReadPoemState extends State<ReadPoem> {
                                             fontWeight: FontWeight.w700,
                                             fontFamily: "Arita-dotum-_OTF",
                                             fontStyle: FontStyle.normal,
-                                            fontSize: screenWidth*0.035,
+                                            fontSize: screenWidth*0.03,
                                           ),
                                         ),
                                       ),
@@ -252,29 +281,6 @@ class _ReadPoemState extends State<ReadPoem> {
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: screenWidth*0.35,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                SizedBox(height: screenHeight*0.01,),
-                                Text(school + '  ' + grade + '학년 ' + clas + '반',
-                                  style: TextStyle(
-                                    fontSize: screenWidth*0.04,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight*0.01,),
-                                Text(nickname + ' 작성',
-                                  style: TextStyle(
-                                    fontSize: screenWidth*0.03,
-                                    //fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),
@@ -286,7 +292,7 @@ class _ReadPoemState extends State<ReadPoem> {
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                   width: screenWidth*1.0,
-                  height: screenHeight*0.65,
+                  height: screenWidth*1.2,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xffe9f4eb),
@@ -297,7 +303,7 @@ class _ReadPoemState extends State<ReadPoem> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: screenHeight*0.02,),
+                      SizedBox(height: screenWidth*0.02,),
                       Text('제목',
                         style: TextStyle(
                           fontSize: screenWidth*0.04,
@@ -305,17 +311,17 @@ class _ReadPoemState extends State<ReadPoem> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: screenHeight*0.02,),
+                      SizedBox(height: screenWidth*0.02,),
                       Container(
                         padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                         width: screenWidth*1.0,
-                        height: screenHeight*0.08,
+                        height: screenWidth*0.15,
                         decoration: BoxDecoration(
                             color: const Color(0x69e9f4eb)
                         ),
                         child: Text(ssubject),
                       ),
-                      SizedBox(height: screenHeight*0.02,),
+                      SizedBox(height: screenWidth*0.02,),
                       Text('나의 느낀점(다짐)',
                         style: TextStyle(
                           fontSize: screenWidth*0.04,
@@ -323,11 +329,11 @@ class _ReadPoemState extends State<ReadPoem> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: screenHeight*0.02,),
+                      SizedBox(height: screenWidth*0.02,),
                       Container(
                         padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                         width: screenWidth*1.0,
-                        height: screenHeight*0.4,
+                        height: screenWidth*0.8,
                         decoration: BoxDecoration(
                             color: const Color(0x69e9f4eb)
                         ),
@@ -336,7 +342,7 @@ class _ReadPoemState extends State<ReadPoem> {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight*0.01,),
+                SizedBox(height: screenWidth*0.03,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -377,19 +383,18 @@ class _ReadPoemState extends State<ReadPoem> {
     return Container(
       padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
       width: screenWidth*0.2,
-      height: screenHeight*0.08,
+      height: screenWidth*0.17,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             width: screenWidth*0.07,
-            height: screenHeight*0.025,
             child: Image.asset(wPimgPath),
             //color: Colors.white,
           ),
           Container(
-            height: screenHeight*0.01,
+            height: screenWidth*0.02,
           ),
           Container(
             child: Text(

@@ -64,7 +64,11 @@ class _ReadSongState extends State<ReadSong> {
       });
     });
   }
-
+  String semail="이메일";
+  String snickname="닉네임";
+  String sschool = "학교";
+  String sgrade = "학년";
+  String sclas = "반";
   String ssubject = "";
   String scontent = "";
   String srecord = "";
@@ -80,6 +84,11 @@ class _ReadSongState extends State<ReadSong> {
     DocumentReference documentReference =  Firestore.instance.collection("songList").document(widget.songKey);
     await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
       setState(() {
+        semail =snapshot.data["semail"];
+        snickname =snapshot.data["snickname"];
+        sschool = snapshot.data["sschool"];
+        sgrade = snapshot.data["sgrade"];
+        sclas = snapshot.data["sclas"];
         ssubject = snapshot.data["ssubject"];
         scontent = snapshot.data["scontent"];
         srecord = snapshot.data["srecord"];
@@ -218,6 +227,28 @@ class _ReadSongState extends State<ReadSong> {
                         child: Row(
                           children: <Widget>[
                             SizedBox(width: screenWidth*0.04),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("$sschool $sgrade 학년  $sclas 반",
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenWidth*0.02,),
+                                Text("$nickname 작성",
+                                  style: TextStyle(
+                                    fontSize: screenWidth*0.03,
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: screenWidth*0.1),
                             Container(
                               child: InkWell(
                                 onTap: onPlayAudio,
@@ -250,28 +281,6 @@ class _ReadSongState extends State<ReadSong> {
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: screenWidth*0.35,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(school + '  ' + grade + '학년 ' + clas + '반',
-                                  style: TextStyle(
-                                    fontSize: screenWidth*0.04,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(height: screenWidth*0.02,),
-                                Text(nickname + ' 작성',
-                                  style: TextStyle(
-                                    fontSize: screenWidth*0.03,
-                                    //fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),

@@ -27,6 +27,11 @@ class WritePoem extends StatefulWidget {
 }
 
 class _WritePoemState extends State<WritePoem> {
+  String semail="이메일";
+  String snickname="닉네임";
+  String sschool = "학교";
+  String sgrade = "학년";
+  String sclas = "반";
   String ssubject="제목";
   String scontent = "내용";
   String srecord = "녹음";
@@ -92,6 +97,7 @@ class _WritePoemState extends State<WritePoem> {
     await Firestore.instance.collection('poemList').document(widget.poemKey)
         .setData({
       'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade,
+      'semail':email, 'snickname':nickname, 'sschool':school, 'sclas':clas, 'sgrade':grade,
       'ssubject':ssubject, 'scontent':scontent, 'srecord': _current.path, 'sindexing':sindexing,
       'poemKey':widget.poemKey});
   }
