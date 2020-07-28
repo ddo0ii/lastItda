@@ -18,8 +18,8 @@ import 'package:path_provider/path_provider.dart';
 
 class WritePoem extends StatefulWidget {
   String poemKey="키";
-  final LocalFileSystem localFileSystem;
-  WritePoem({Key key,@required this.poemKey, this.localFileSystem}) : super(key: key);
+  //final LocalFileSystem localFileSystem;
+  WritePoem({Key key,@required this.poemKey}) : super(key: key);
   // RecordAudio({localFileSystem})
   //     : this.localFileSystem = localFileSystem ?? LocalFileSystem();
   @override
@@ -27,6 +27,7 @@ class WritePoem extends StatefulWidget {
 }
 
 class _WritePoemState extends State<WritePoem> {
+  static LocalFileSystem fs = LocalFileSystem();
   String semail="이메일";
   String snickname="닉네임";
   String sschool = "학교";
@@ -53,6 +54,7 @@ class _WritePoemState extends State<WritePoem> {
   Recording _current;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
 
+
   Future<String> getUser () async {
     user = await FirebaseAuth.instance.currentUser();
     DocumentReference documentReference =  Firestore.instance.collection("loginInfo").document(user.email);
@@ -70,6 +72,7 @@ class _WritePoemState extends State<WritePoem> {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseUser _poemfireUser;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  String _poemURL = "url";
 
   MedcorderAudio audioModule = new MedcorderAudio();
   bool canRecord = false;
@@ -98,7 +101,7 @@ class _WritePoemState extends State<WritePoem> {
         .setData({
       'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade,
       'semail':email, 'snickname':nickname, 'sschool':school, 'sclas':clas, 'sgrade':grade,
-      'ssubject':ssubject, 'scontent':scontent, 'srecord': _current.path, 'sindexing':sindexing,
+      'ssubject':ssubject, 'scontent':scontent, 'srecord': _poemURL, 'sindexing':sindexing,
       'poemKey':widget.poemKey});
   }
 
@@ -551,14 +554,22 @@ class _WritePoemState extends State<WritePoem> {
   }
 
   _stop() async {
+    DateTime nowtime = new DateTime.now();
     var result = await _recorder.stop();
     print("Stop recording: ${result.path}");
     print("Stop recording: ${result.duration}");
-    File file = widget.localFileSystem.file(result.path);
+    File file = fs.file(result.path);
     print("File length: ${await file.length()}");
     setState(() {
       _current = result;
       _currentStatus = _current.status;
+    });
+    StorageReference storageReference = _firebaseStorage.ref().child("poemRcd/${_poemfireUser.uid}1_$nowtime");
+    StorageUploadTask storageUploadTask = storageReference.putFile(file);
+    await storageUploadTask.onComplete;
+    String downloadURL = await storageReference.getDownloadURL();
+    setState(() {
+      _poemURL = downloadURL;
     });
   }
 
@@ -627,6 +638,6 @@ class _WritePoemState extends State<WritePoem> {
 
   void onPlayAudio() async {
     AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.play(_current.path, isLocal: true);
+    await audioPlayer.play(_poemURL, isLocal: true);
   }
 }

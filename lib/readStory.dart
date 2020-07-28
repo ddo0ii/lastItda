@@ -239,7 +239,7 @@ class _ReadStoryState extends State<ReadStory> {
                                   ),
                                 ),
                                 SizedBox(height: screenWidth*0.02,),
-                                Text("$nickname 작성",
+                                Text("$snickname 작성",
                                   style: TextStyle(
                                     fontSize: screenWidth*0.03,
                                     //fontWeight: FontWeight.bold,
