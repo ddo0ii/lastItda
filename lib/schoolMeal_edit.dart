@@ -139,10 +139,9 @@ class _SchoolMealEditState extends State<SchoolMealEdit> {
   void setTapping()async{
     await Firestore.instance.collection('schoolMealList').document(school)
         .setData({'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade,
-      'pic1' : _ImageURL1, 'pic2' : _ImageURL2, 'pic3' : _ImageURL3, 'pic4' : _ImageURL4, 'pic5' : _ImageURL5, 'pic5' : _ImageURL5, 'pic6' : _ImageURL6, 'pic7' : _ImageURL7,
-      'pic8' : _ImageURL8, 'pic9' : _ImageURL10, 'pic11' : _ImageURL11, 'pic12' : _ImageURL12,
+      'pic1' : _ImageURL1, 'pic2' : _ImageURL2,
       'pic1n' : pic1n, 'pic2n' : pic2n,
-      '_date1' : monfinaldate, '_date2' : tuefinaldate,'_date3' : wedfinaldate,'_date4' : thufinaldate,'_date5' : frifinaldate,'_date6' : satfinaldate,
+      '_date1' : monfinaldate, '_date2' : tuefinaldate,
     });
   }
 
@@ -254,12 +253,7 @@ class _SchoolMealEditState extends State<SchoolMealEdit> {
                       ),
                     ),
                     Container(height: screenWidth*0.03,),
-                    _dayItems(getGalleryImage1, getGalleryImage2, monCallDatePicker, _image1, _image2, '월요일  :  ', monfinaldate),
-                    _dayItems(getGalleryImage3, getGalleryImage4, tueCallDatePicker, _image3, _image4, '화요일  :  ', tuefinaldate),
-                    _dayItems(getGalleryImage5, getGalleryImage6, wedCallDatePicker, _image5, _image6, '수요일  :  ', wedfinaldate),
-                    _dayItems(getGalleryImage7, getGalleryImage8, thuCallDatePicker, _image7, _image8, '목요일  :  ', thufinaldate),
-                    _dayItems(getGalleryImage9, getGalleryImage10, friCallDatePicker, _image9, _image10, '금요일  :  ', frifinaldate),
-                    _dayItems(getGalleryImage11, getGalleryImage12, satCallDatePicker, _image11, _image12, '토요일  :  ', satfinaldate),
+                    _dayItems(getGalleryImage1, getGalleryImage2, monCallDatePicker, tueCallDatePicker, _image1, _image2, '시작 일  :  ', '마지막 일  :  ',  monfinaldate, tuefinaldate),
                     //잇기버튼
                     Container(
                       width: screenWidth*0.8,
@@ -504,7 +498,7 @@ class _SchoolMealEditState extends State<SchoolMealEdit> {
     });
   }
 
-  Widget _dayItems(Function gettingImg1, Function gettingImg2, Function datePicking, File ImgPath1, File ImgPath2, String day1, String dating1){
+  Widget _dayItems(Function gettingImg1, Function gettingImg2, Function datePicking, Function datePicking2, File ImgPath1, File ImgPath2, String day1, String day2, String dating1, String dating2 ){
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     var screenHeight = queryData.size.height;
@@ -514,8 +508,9 @@ class _SchoolMealEditState extends State<SchoolMealEdit> {
         children: <Widget>[
           //날짜
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Container(width: screenWidth*0.05,),
               Container(
                 child: Text(
                   day1,
@@ -574,6 +569,72 @@ class _SchoolMealEditState extends State<SchoolMealEdit> {
                   ),
                 ),
                 onTap: datePicking,
+              ),
+            ],
+          ),
+          Container(height: screenWidth*0.02,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(width: screenWidth*0.05,),
+              Container(
+                child: Text(
+                  day2,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Arita-dotum-_OTF",
+                    fontStyle: FontStyle.normal,
+                    fontSize: screenWidth*0.04,
+                  ),
+                ),
+              ),
+              InkWell(
+                child: Container(
+                  width: screenWidth*0.6,
+                  height: screenWidth*0.1,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xffb5c8bc),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: dating2 == null
+                      ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                          "날짜를 선택해주세요",
+                          style: TextStyle(
+                            color: Color(0xff000000),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Arita-dotum-_OTF",
+                            fontStyle: FontStyle.normal,
+                            fontSize: screenWidth*0.04,
+                          ),
+                          textAlign: TextAlign.center
+                      )
+                    ],
+                  )
+                      : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        dating2,
+                        style: TextStyle(
+                          color: Color(0xff000000),
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Arita-dotum-_OTF",
+                          fontStyle: FontStyle.normal,
+                          fontSize: screenWidth*0.04,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+                onTap: datePicking2,
               ),
             ],
           ),

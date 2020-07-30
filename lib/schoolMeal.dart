@@ -67,37 +67,12 @@ class _SchoolMealState extends State<SchoolMeal> {
       setState(() {
         _image1 = snapshot.data["_image1"];
         _image2 = snapshot.data["_image2"];
-        _image3 = snapshot.data["_image3"];
-        _image4 = snapshot.data["_image4"];
-        _image5 = snapshot.data["_image5"];
-        _image6 = snapshot.data["_image6"];
-        _image7 = snapshot.data["_image7"];
-        _image8 = snapshot.data["_image8"];
-        _image9 = snapshot.data["_image9"];
-        _image10 = snapshot.data["_image10"];
-        _image11 = snapshot.data["_image11"];
-        _image12 = snapshot.data["_image12"];
         pic1 = snapshot.data["pic1"];
         pic2 = snapshot.data["pic2"];
-        pic3 = snapshot.data["pic3"];
-        pic4 = snapshot.data["pic4"];
-        pic5 = snapshot.data["pic5"];
-        pic6 = snapshot.data["pic6"];
-        pic7 = snapshot.data["pic7"];
-        pic8 = snapshot.data["pic8"];
-        pic9 = snapshot.data["pic9"];
-        pic10 = snapshot.data["pic10"];
-        pic11 = snapshot.data["pic11"];
-        pic12 = snapshot.data["pic12"];
         pic1n = snapshot.data["pic1n"];
         pic2n = snapshot.data["pic2n"];
         _date1 = snapshot.data["_date1"];
         _date2 = snapshot.data["_date2"];
-        _date3 = snapshot.data["_date3"];
-        _date4 = snapshot.data["_date4"];
-        _date5 = snapshot.data["_date5"];
-        _date6 = snapshot.data["_date6"];
-        _date7 = snapshot.data["_date7"];
       });
     });
   }
@@ -205,12 +180,7 @@ class _SchoolMealState extends State<SchoolMeal> {
                       ],
                     ),
                   ),
-                  _dayItems(pic1, pic2, '월요일  :  ', _date1),
-                  _dayItems(pic3, pic4, '화요일  :  ', _date2),
-                  _dayItems(pic5, pic6, '수요일  :  ', _date3),
-                  _dayItems(pic7, pic8, '목요일  :  ', _date4),
-                  _dayItems(pic9, pic10, '금요일  :  ', _date5),
-                  _dayItems(pic11, pic12, '토요일  :  ', _date6),
+                  _dayItems(pic1, pic2, '시작 일  :  ', '마지막 일  :  ', _date1, _date2),
                 ],
               ),
             ),
@@ -273,7 +243,7 @@ class _SchoolMealState extends State<SchoolMeal> {
     );
   }
 
-  Widget _dayItems(String ImgRPath1, String ImgRPath2, String day1, String dating1){
+  Widget _dayItems(String ImgRPath1, String ImgRPath2, String day1, String day2, String dating1, String dating2){
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     var screenHeight = queryData.size.height;
@@ -283,8 +253,9 @@ class _SchoolMealState extends State<SchoolMeal> {
         children: <Widget>[
           //닐짜
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Container(width: screenWidth*0.05,),
               Container(
                 child: Text(
                   day1,
@@ -302,6 +273,40 @@ class _SchoolMealState extends State<SchoolMeal> {
                     :
                 Text(
                     dating1,
+                    style: TextStyle(
+                      color: Color(0xff000000),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Arita-dotum-_OTF",
+                      fontStyle: FontStyle.normal,
+                      fontSize: screenWidth*0.04,
+                    ),
+                    textAlign: TextAlign.center
+                ),
+              ),
+            ],
+          ),
+          Container(height: screenWidth*0.02,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(width: screenWidth*0.05,),
+              Container(
+                child: Text(
+                  day2,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Arita-dotum-_OTF",
+                    fontStyle: FontStyle.normal,
+                    fontSize: screenWidth*0.04,
+                  ),
+                ),
+              ),
+              Container(
+                child: dating2 == null ?
+                Text('')
+                    :
+                Text(
+                    dating2,
                     style: TextStyle(
                       color: Color(0xff000000),
                       fontWeight: FontWeight.w700,
