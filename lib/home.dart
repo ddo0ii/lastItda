@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-
     super.initState();
     getUser();
   }
 
   @override
   Widget build(BuildContext context) {
+    getUser();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -223,6 +223,7 @@ class _HomePageState extends State<HomePage> {
             )
         ),
         body: ListView(
+
           children: <Widget>[
             SizedBox(height: 100),
             Center(
@@ -372,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                   height: 50.0,
                   child: RaisedButton(
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Goal_ListPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Goal_ListPage(schoolName: school,)));
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -407,7 +408,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ],
-        ),
+        )
       // TODO: Set resizeToAvoidBottomInset (101)
     );
   }

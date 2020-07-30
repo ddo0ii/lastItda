@@ -286,12 +286,13 @@ class _GoalEditPageState extends State<GoalEditPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(height: screenWidth*0.1,),
+              Container(height: screenWidth*0.06,),
               Text(
                 "친구들의 목표를 보며 응원의 댓글을 남기면\n 더 잘할 수 있어요",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth*0.035,
                 ),
               ),
               Container(height: screenWidth*0.04,),
@@ -308,7 +309,7 @@ class _GoalEditPageState extends State<GoalEditPage> {
                       child: Icon(
                         Icons.star,
                         color: Color(0xfffbb359),
-                        size: screenWidth*0.07,
+                        size: screenWidth*0.04,
                       ),
                     ),
                     Container(
@@ -319,15 +320,15 @@ class _GoalEditPageState extends State<GoalEditPage> {
                   ],
                 ),
               ),
-              Container(height: screenWidth*0.04,),
+              Container(height: screenWidth*0.02,),
               Container(
-                width: screenWidth * 0.6,
+                height: screenWidth * 0.4,
+                width: screenWidth * 0.4,
                 child:  Image.asset(
                   'assets/tree.png',
                   fit: BoxFit.contain,
                 ),
               ),
-              Container(height: screenWidth*0.04,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -363,9 +364,9 @@ class _GoalEditPageState extends State<GoalEditPage> {
               ),
               Container(height: screenWidth*0.05,),
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(screenWidth*0.033),
                 width: screenWidth*0.9,
-                height: screenWidth*1.0,
+                height: screenWidth*0.6,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                         Radius.circular(5.0) //                 <--- border radius here
@@ -374,7 +375,6 @@ class _GoalEditPageState extends State<GoalEditPage> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       children: [
@@ -382,7 +382,7 @@ class _GoalEditPageState extends State<GoalEditPage> {
                           "오늘의 목표",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: screenWidth*0.04,
+                            fontSize: screenWidth*0.03,
                           ),
                         ),
                         Theme(
@@ -397,15 +397,15 @@ class _GoalEditPageState extends State<GoalEditPage> {
                         ),
                       ],
                     ),
-                    _todaybuildTextComposer(screenWidth*0.8,screenWidth*0.13),
-                    Container(height: screenWidth*0.04,),
+                    _todaybuildTextComposer(screenWidth*0.8,screenWidth*0.07),
+                    Container(height: screenWidth*0.03,),
                     Row(
                       children: [
                         Text(
-                          "이번 달 의 목표",
+                          "이번 달의 목표",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: screenWidth*0.04,
+                            fontSize: screenWidth*0.03,
                           ),
                         ),
                         Theme(
@@ -420,16 +420,15 @@ class _GoalEditPageState extends State<GoalEditPage> {
                         ),
                       ],
                     ),
-                    Container(height: screenWidth*0.02,),
-                    _weekbuildTextComposer(screenWidth*0.8,screenWidth*0.13),
-                    Container(height: screenWidth*0.04,),
+                    _weekbuildTextComposer(screenWidth*0.8,screenWidth*0.07),
+                    Container(height: screenWidth*0.03,),
                     Row(
                       children: [
                         Text(
                           "올해의 목표",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: screenWidth*0.04,
+                            fontSize: screenWidth*0.03,
                           ),
                         ),
                         Theme(
@@ -444,12 +443,10 @@ class _GoalEditPageState extends State<GoalEditPage> {
                         ),
                       ],
                     ),
-                    Container(height: screenWidth*0.02,),
-                    _yearbuildTextComposer(screenWidth*0.8,screenWidth*0.13),
+                    _yearbuildTextComposer(screenWidth*0.8,screenWidth*0.07),
                   ],
                 ),
               ),
-              Container(height: screenWidth*0.1,),
             ],
           ),
         ),

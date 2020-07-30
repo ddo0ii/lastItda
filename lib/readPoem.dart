@@ -32,10 +32,14 @@ class _ReadPoemState extends State<ReadPoem> {
   String school = "학교";
   String grade = "학년";
   String clas = "반";
-  int point = -1;
   dynamic data;
   final _formKey = GlobalKey<FormState>();
-
+  int favoriteNum = 0;
+  int totalFavoriteNum ;
+  int point;
+  int index;
+  final _chatController = TextEditingController();
+  String comment = "";
 
   FlutterAudioRecorder _recorder;
   Recording _current;
@@ -50,20 +54,6 @@ class _ReadPoemState extends State<ReadPoem> {
   double playPosition = 0.0;
   String file = "";
 
-
-  Future<String> getUser () async {
-    user = await FirebaseAuth.instance.currentUser();
-    DocumentReference documentReference =  Firestore.instance.collection("loginInfo").document(user.email);
-    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
-      setState(() {
-        nickname =snapshot.data["nickname"];
-        school = snapshot.data["schoolname"];
-        grade = snapshot.data["grade"];
-        clas = snapshot.data["class"];
-        point = snapshot.data["point"];
-      });
-    });
-  }
   String semail="이메일";
   String snickname="닉네임";
   String sschool = "학교";
@@ -79,6 +69,20 @@ class _ReadPoemState extends State<ReadPoem> {
   FirebaseUser _poemfireUser;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
+  Future<String> getUser () async {
+    user = await FirebaseAuth.instance.currentUser();
+    DocumentReference documentReference =  Firestore.instance.collection("loginInfo").document(user.email);
+    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      setState(() {
+        nickname =snapshot.data["nickname"];
+        school = snapshot.data["schoolname"];
+        grade = snapshot.data["grade"];
+        clas = snapshot.data["class"];
+        point = snapshot.data["point"];
+        index = snapshot.data["index"];
+      });
+    });
+  }
   Future<String> getPoem () async {
     _poemfireUser = await FirebaseAuth.instance.currentUser();
     DocumentReference documentReference =  Firestore.instance.collection("poemList").document(widget.poemKey);
@@ -94,6 +98,7 @@ class _ReadPoemState extends State<ReadPoem> {
         srecord = snapshot.data["srecord"];
         sindexing = snapshot.data["sindexing"];
         poemKey = snapshot.data["poemKey"];
+        totalFavoriteNum = snapshot.data["total"];
       });
     });
   }
@@ -113,13 +118,182 @@ class _ReadPoemState extends State<ReadPoem> {
     return;
   }
 
+  Widget _chatList () {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('poemList').document(widget.poemKey).collection("poemChatInfo").snapshots(),
+        builder: (context, snapshot) {
+          final items = snapshot.data.documents;
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return InkWell(
+                child: ListTile(
+                  title: Text(item['nickname'],
+                    style: TextStyle(
+                      fontSize: screenWidth*0.055,
+                      fontWeight: FontWeight.bold,
+                      //color: Colors.black,
+                    ),
+                  ),
+                  subtitle: Text(item['comment'],
+                    style: TextStyle(
+                      fontSize: screenWidth*0.035,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
+  //좋아요를 눌렀는지 아닌지 알기 위
+  Future<String> getLike () async {
+    user = await FirebaseAuth.instance.currentUser();
+    DocumentReference documentReference =  Firestore.instance.collection("poemList").document(widget.poemKey)
+        .collection("poemLikeInfo").document(user.email);
+
+    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      if(this.mounted) {
+        setState(() {
+          favoriteNum = snapshot.data['favoriteNum'];
+        });
+      }
+    });
+  }
+
+  Future<void> totalLikeUpdate (int num) async {
+    DocumentReference documentReference = await Firestore.instance.collection("poemList").document(widget.poemKey);
+
+    await documentReference.updateData(<String, dynamic>{
+      'total' : totalFavoriteNum+num,
+    });
+  }
+
+  Future<void> likeAddUpdate () async {
+    DocumentReference documentReference = await Firestore.instance.collection("poemList").document(widget.poemKey)
+        .collection("poemLikeInfo").document(user.email);
+
+    documentReference.setData(<String, dynamic>{
+      'favoriteNum' : 1,
+    });
+
+    favoriteNum = 1;
+  }
+
+  void _chathandleSubmitted(String text) {
+    _setChat(text);
+    if(this.mounted) {
+      setState(() {
+        comment = text;
+      });
+    }
+    _chatController.clear();
+  }
+
+  Widget _chatbuildTextComposer(double width, double height) {
+    return  Container(
+      width: width,
+      height: height,
+      child:  TextField(
+        controller: _chatController,
+        decoration:  InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10,0,0,0),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                  color: HexColor("#53965c")),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                  color: HexColor("#53965c")),
+            ),
+            hintText: "응댓 입력..."
+        ),
+      ),
+    );
+  }
+
+  Future<void> _setChat (String comment) async {
+    String _nickname;
+    user = await FirebaseAuth.instance.currentUser();
+    DocumentReference documentReference3 =  Firestore.instance.collection("loginInfo").document(user.email);
+
+    await documentReference3.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      if(this.mounted) {
+        setState(() {
+          _nickname = snapshot.data["nickname"];
+        });
+      }
+    });
+
+    DocumentReference documentReference2 = await Firestore.instance.collection("loginInfo").document(user.email);
+    documentReference2.updateData(<String, dynamic>{
+      'index' : index+1
+    });
+
+    await documentReference2.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      if(this.mounted) {
+        setState(() {
+          index = snapshot.data['index'];
+        });
+      }
+    });
+
+    DocumentReference documentReference = await Firestore.instance.collection("poemList").document(widget.poemKey)
+        .collection("poemChatInfo").document("$index");
+
+    documentReference.setData(<String, dynamic>{
+      'nickname' : _nickname,
+      'comment' : comment,
+    });
+  }
+
+  Future<void> likeSubUpdate () async {
+    DocumentReference documentReference = await Firestore.instance.collection("poemList").document(widget.poemKey)
+        .collection("poemLikeInfo").document(user.email);
+
+    documentReference.setData(<String, dynamic>{
+      'favoriteNum' : 0,
+    });
+
+    favoriteNum = 0;
+  }
+
+  Future<void> pointUpdate(int num) async {
+    final user = await FirebaseAuth.instance.currentUser();
+
+    DocumentReference documentReference = await Firestore.instance.collection("loginInfo").document(user.email);
+
+    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      if(this.mounted) {
+        setState(() {
+          point = snapshot.data['point'];
+        });
+      }
+    });
+    print("$point + $num");
+    return Firestore.instance.collection('loginInfo').document(user.email).updateData(<String, dynamic>{
+      'point' : point+num ,
+    });
+
+  }
+
   @override
   void initState() {
     super.initState();
     getUser();
     getPoem();
+    getLike();
     _poemPrepareService();
-
     _initSettings();
   }
 
@@ -129,6 +303,8 @@ class _ReadPoemState extends State<ReadPoem> {
     queryData = MediaQuery.of(context);
     var screenHeight = queryData.size.height;
     var screenWidth = queryData.size.width;
+    getUser();
+    getPoem();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -348,6 +524,53 @@ class _ReadPoemState extends State<ReadPoem> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Container(
+                        padding: EdgeInsets.fromLTRB(screenWidth*0.05, 0,0,0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "좋아요",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                favoriteNum == 1 ? Icons.favorite : Icons.favorite_border,
+                                color: Colors.red,
+                                size: screenHeight*0.033,
+                              ),
+                              onPressed: (){
+                                getLike();
+                                if(favoriteNum == 1) {
+                                  setState(() {
+                                    likeSubUpdate(); //FavoriteNUm 을 0으로
+                                    totalLikeUpdate (-1);
+                                    pointUpdate(-100);
+                                  });
+                                }
+                                else{
+                                  setState(() {
+                                    likeAddUpdate(); ////FavoriteNUm 을 1으로
+                                    totalLikeUpdate (1);
+                                    pointUpdate(100);
+                                  });
+                                }
+                              },
+                            ),
+                            Text(
+                              "$totalFavoriteNum",
+                              style: TextStyle(
+                                fontSize: screenWidth*0.033,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Container(width: screenWidth*0.03,),
+                          ],
+                        ),
+                      ),
+                      Container(
                         decoration: BoxDecoration(
                           color: Color(0xfffff7ef),
                           borderRadius: BorderRadius.only(
@@ -367,6 +590,27 @@ class _ReadPoemState extends State<ReadPoem> {
                     ],
                   ),
                 ),
+                Container(
+                  width: screenWidth*0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: screenHeight*0.07,),
+                      _chatbuildTextComposer(screenWidth*0.75,screenHeight*0.04),
+                      IconButton(
+                        icon: Icon(
+                          Icons.send,
+                          color: HexColor("#53965c"),
+                        ),
+                        onPressed: (){
+                          if(_chatController.text.isNotEmpty)
+                            _chathandleSubmitted(_chatController.text);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                _chatList(),
               ],
             ),
           ),

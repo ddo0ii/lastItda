@@ -7,11 +7,20 @@ import 'help.dart';
 
 
 var Pass;
-class Goal_ListPage extends StatelessWidget{
+class Goal_ListPage extends StatefulWidget{
+  String schoolName;
+  Goal_ListPage({Key key,@required this.schoolName}) : super(key: key);
+  @override
+  _Goal_ListPageState createState() => _Goal_ListPageState();
+}
+
+class _Goal_ListPageState extends State<Goal_ListPage> {
+  int favoriteNum = 0;
+  FirebaseUser user ;
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('loginInfo').snapshots(),
+      stream: Firestore.instance.collection(widget.schoolName).orderBy('email', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -27,6 +36,7 @@ class Goal_ListPage extends StatelessWidget{
       childAspectRatio: 8.0 / 9.0,
       children: snapshot.map((data) => _buildGridCards(context, data)).toList(),
     );
+
   }
 
   Widget _buildGridCards(BuildContext context, DocumentSnapshot data) {
@@ -35,6 +45,8 @@ class Goal_ListPage extends StatelessWidget{
     var screenHeight = queryData.size.height;
     var screenWidth = queryData.size.width;
     final record = Record.fromSnapshot(data);
+
+
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(

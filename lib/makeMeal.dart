@@ -51,6 +51,7 @@ class _MakeMealState extends State<MakeMeal> {
   String clas = "반";
   int point = -1;
   dynamic data = "데이터";
+  int total = 0;
 
   Future<String> getUser () async {
     user = await FirebaseAuth.instance.currentUser();
@@ -94,7 +95,7 @@ class _MakeMealState extends State<MakeMeal> {
         .setData({'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade, 'mindexing':mindexing, 'mealKey':widget.mealKey,
       'tansu':tansu, 'danback':danback, 'jibang': jibang, 'vitamin' : vitamin, 'moogi' : moogi, 'water' : water,
       'pic1' : _ImageURL1, 'pic2' : _ImageURL2, 'pic3' : _ImageURL3, 'pic4' : _ImageURL4, 'pic5' : _ImageURL5, 'pic6' : _ImageURL6,
-      'pic1n' : pic1n, 'pic2n' : pic2n, 'pic3n' : pic3n, 'pic4n' : pic4n, 'pic5n' : pic5n, 'pic6n' : pic6n,});
+      'pic1n' : pic1n, 'pic2n' : pic2n, 'pic3n' : pic3n, 'pic4n' : pic4n, 'pic5n' : pic5n, 'pic6n' : pic6n, 'total':total});
   }
 
   @override

@@ -1,8 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:itda/help.dart';
 import 'package:itda/schoolMeal.dart';
 import 'package:itda/mealList.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
+
 
 class ConnectMeal extends StatefulWidget {
   @override
@@ -10,8 +15,39 @@ class ConnectMeal extends StatefulWidget {
 }
 
 class _ConnectMealState extends State<ConnectMeal> {
+  Firestore _firestore = Firestore.instance;
+  FirebaseUser user ;
+  String email="이메일";
+  String nickname="닉네임";
+  String school = "학교";
+  String grade = "학년";
+  String clas = "반";
+  int point = 0;
+  dynamic data;
+
+  Future<String> getUser () async {
+    user = await FirebaseAuth.instance.currentUser();
+    DocumentReference documentReference =  Firestore.instance.collection("loginInfo").document(user.email);
+
+    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async {
+      setState(() {
+        nickname =snapshot.data["nickname"];
+        school = snapshot.data["schoolname"];
+        grade = snapshot.data["grade"];
+        clas = snapshot.data["class"];
+        point = snapshot.data["point"];
+      });
+    });
+  }
+
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     var screenHeight = queryData.size.height;

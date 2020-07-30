@@ -38,6 +38,7 @@ class _WritePoemState extends State<WritePoem> {
   String srecord = "녹음";
   static int sindex = 1;
   String sindexing = "$sindex";
+  int total = 0;
 
   Firestore _firestore = Firestore.instance;
   FirebaseUser user;
@@ -102,7 +103,7 @@ class _WritePoemState extends State<WritePoem> {
       'email':email, 'nickname':nickname, 'school':school, 'clas':clas, 'grade':grade,
       'semail':email, 'snickname':nickname, 'sschool':school, 'sclas':clas, 'sgrade':grade,
       'ssubject':ssubject, 'scontent':scontent, 'srecord': _poemURL, 'sindexing':sindexing,
-      'poemKey':widget.poemKey});
+      'poemKey':widget.poemKey, 'total':total});
   }
 
   @override
@@ -638,6 +639,6 @@ class _WritePoemState extends State<WritePoem> {
 
   void onPlayAudio() async {
     AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.play(_poemURL, isLocal: true);
+    await audioPlayer.play(_current.path, isLocal: true);
   }
 }
