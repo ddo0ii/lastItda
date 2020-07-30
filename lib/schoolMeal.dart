@@ -31,18 +31,19 @@ class _SchoolMealState extends State<SchoolMeal> {
   dynamic data;
   final _formKey = GlobalKey<FormState>();
 
-  File _image1, _image2 = null;
-  String pic1 = "식단";
-  String pic2 = "알레르기정보";
+  String _date1, _date2, _date3, _date4, _date5, _date6, _date7 = "1";
+  File _image1, _image2, _image3, _image4, _image5, _image6, _image7, _image8, _image9, _image10, _image11, _image12, _image13, _image14 = null;
+  String pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14 = "픽쳐";
   String pic1n = "식단";
   String pic2n = "알레르기정보";
   String schoolName = "학교이름";
   bool admin;
+
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseUser _schoolImgUser;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  String _ImageURL1 = "url";
-  String _ImageURL2 = "url";
+
+  String _ImageURL1,_ImageURL2, _ImageURL3, _ImageURL4, _ImageURL5,_ImageURL6, _ImageURL7, _ImageURL8,_ImageURL9, _ImageURL10, _ImageURL11, _ImageURL12, _ImageURL13, _ImageURL14 = "url";
 
   Future<String> getUser () async {
     user = await FirebaseAuth.instance.currentUser();
@@ -66,10 +67,37 @@ class _SchoolMealState extends State<SchoolMeal> {
       setState(() {
         _image1 = snapshot.data["_image1"];
         _image2 = snapshot.data["_image2"];
+        _image3 = snapshot.data["_image3"];
+        _image4 = snapshot.data["_image4"];
+        _image5 = snapshot.data["_image5"];
+        _image6 = snapshot.data["_image6"];
+        _image7 = snapshot.data["_image7"];
+        _image8 = snapshot.data["_image8"];
+        _image9 = snapshot.data["_image9"];
+        _image10 = snapshot.data["_image10"];
+        _image11 = snapshot.data["_image11"];
+        _image12 = snapshot.data["_image12"];
         pic1 = snapshot.data["pic1"];
         pic2 = snapshot.data["pic2"];
+        pic3 = snapshot.data["pic3"];
+        pic4 = snapshot.data["pic4"];
+        pic5 = snapshot.data["pic5"];
+        pic6 = snapshot.data["pic6"];
+        pic7 = snapshot.data["pic7"];
+        pic8 = snapshot.data["pic8"];
+        pic9 = snapshot.data["pic9"];
+        pic10 = snapshot.data["pic10"];
+        pic11 = snapshot.data["pic11"];
+        pic12 = snapshot.data["pic12"];
         pic1n = snapshot.data["pic1n"];
         pic2n = snapshot.data["pic2n"];
+        _date1 = snapshot.data["_date1"];
+        _date2 = snapshot.data["_date2"];
+        _date3 = snapshot.data["_date3"];
+        _date4 = snapshot.data["_date4"];
+        _date5 = snapshot.data["_date5"];
+        _date6 = snapshot.data["_date6"];
+        _date7 = snapshot.data["_date7"];
       });
     });
   }
@@ -174,92 +202,15 @@ class _SchoolMealState extends State<SchoolMeal> {
                           ),
                         ),
                         Container(height: screenWidth*0.02,),
-                        //닐짜
-                        Container(
-                          child: Text(
-                              today_date,
-                              style: TextStyle(
-                                color: Color(0xff000000),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Arita-dotum-_OTF",
-                                fontStyle: FontStyle.normal,
-                                fontSize: screenWidth*0.04,
-                              ),
-                              textAlign: TextAlign.center
-                          ),
-                        ),
-                        Container(height: screenWidth*0.02,),
-                        //식단이미지
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          width: screenWidth*0.9,
-                          height: screenWidth*0.7,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xffb5c8bc),
-                            ),
-                            color: Colors.white,
-                          ),
-                          child: _smallImageItem(pic1),
-                        ),
                       ],
                     ),
                   ),
-                  //알레르기 정보
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: screenWidth*0.03,
-                        ),
-                        Container(
-                          width: screenWidth*0.4,
-                          height: screenWidth*0.1,
-                          decoration: BoxDecoration(
-                              color: const Color(0xfffbb359)
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                '알레르기 정보',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Arita-dotum-_OTF",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: screenWidth*0.04,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: screenWidth*0.9,
-                          height: screenWidth*0.5,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Color(0xfffbb359)
-                            ),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: _ssmallImageItem(pic2),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(height: screenWidth*0.02,),
+                  _dayItems(pic1, pic2, '월요일  :  ', _date1),
+                  _dayItems(pic3, pic4, '화요일  :  ', _date2),
+                  _dayItems(pic5, pic6, '수요일  :  ', _date3),
+                  _dayItems(pic7, pic8, '목요일  :  ', _date4),
+                  _dayItems(pic9, pic10, '금요일  :  ', _date5),
+                  _dayItems(pic11, pic12, '토요일  :  ', _date6),
                 ],
               ),
             ),
@@ -319,6 +270,121 @@ class _SchoolMealState extends State<SchoolMeal> {
           )
       ),
       body: _buildBody(context),
+    );
+  }
+
+  Widget _dayItems(String ImgRPath1, String ImgRPath2, String day1, String dating1){
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    var screenHeight = queryData.size.height;
+    var screenWidth = queryData.size.width;
+    return Container(
+      child: Column(
+        children: <Widget>[
+          //닐짜
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  day1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Arita-dotum-_OTF",
+                    fontStyle: FontStyle.normal,
+                    fontSize: screenWidth*0.04,
+                  ),
+                ),
+              ),
+              Container(
+                child: dating1 == null ?
+                    Text('')
+                    :
+                Text(
+                    dating1,
+                    style: TextStyle(
+                      color: Color(0xff000000),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Arita-dotum-_OTF",
+                      fontStyle: FontStyle.normal,
+                      fontSize: screenWidth*0.04,
+                    ),
+                    textAlign: TextAlign.center
+                ),
+              ),
+            ],
+          ),
+          Container(height: screenWidth*0.03,),
+          //식단이미지
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            width: screenWidth*0.9,
+            height: screenWidth*0.7,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Color(0xffb5c8bc),
+              ),
+              color: Colors.white,
+            ),
+            child: _smallImageItem(ImgRPath1),
+          ),
+          //알레르기 정보
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: screenWidth*0.03,
+                ),
+                Container(
+                  width: screenWidth*0.4,
+                  height: screenWidth*0.1,
+                  decoration: BoxDecoration(
+                      color: const Color(0xfffbb359)
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        '알레르기 정보',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Arita-dotum-_OTF",
+                          fontStyle: FontStyle.normal,
+                          fontSize: screenWidth*0.04,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: screenWidth*0.9,
+                  height: screenWidth*0.5,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Color(0xfffbb359)
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: _ssmallImageItem(ImgRPath2),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(height: screenWidth*0.02,),
+        ],
+      ),
     );
   }
 
